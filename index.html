@@ -603,6 +603,14 @@
       gap: 10px;
     }
 
+    .lab-form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     .lab-input-row {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -625,6 +633,144 @@
       font-size: 0.9rem;
       font-family: inherit;
       outline: none;
+    }
+
+    .lab-textarea {
+      width: 100%;
+      min-height: 145px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1.5px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: inherit;
+      line-height: 1.55;
+      resize: vertical;
+      outline: none;
+    }
+
+    /* カード一覧・まとめて削除モーダル用リスト */
+    .manage-cards-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+    }
+
+    .manage-cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 330px;
+      overflow-y: auto;
+      padding-right: 2px;
+      margin-bottom: 14px;
+    }
+
+    .manage-card-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: var(--input-bg);
+      border: 1.5px solid var(--card-border);
+      cursor: pointer;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .manage-card-row.checked {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .manage-card-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .manage-card-body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .manage-card-front {
+      font-size: 0.9rem;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .manage-card-back {
+      font-size: 0.8rem;
+      color: var(--sub-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .manage-card-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--sub-text);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .manage-card-badge.mastered {
+      background: var(--break-light);
+      color: var(--break-color);
+      border-color: var(--break-color);
+    }
+
+    /* ③ 弱点ノート選択式チップ */
+    .quick-chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 2px 0;
+    }
+
+    .quick-chip-btn {
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1.5px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--sub-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .quick-chip-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .quick-chip-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-text);
     }
 
     .weakness-list {
@@ -2015,24 +2161,33 @@
           </div>
 
           <div class="lab-form-box">
-            <strong style="font-size: 0.88rem;">➕ 新しい暗記カードを追加（<span id="cardFormSubjectLabel">国語</span>）</strong>
+            <div class="lab-form-header">
+              <strong style="font-size: 0.88rem;">➕ 新しい暗記カードを追加（<span id="cardFormSubjectLabel">国語</span>）</strong>
+              <button type="button" class="stat-edit-btn" style="margin-top:0; border-color: var(--primary); color: var(--primary);" data-action="open-bulk-card-modal">📥 テキストから一括追加（コピペ）</button>
+            </div>
             <div class="lab-input-row">
               <input type="text" class="lab-input" id="cardFrontInput" placeholder="表面（問題・英単語・公式など）">
               <input type="text" class="lab-input" id="cardBackInput" placeholder="裏面（答え・意味・解説）">
             </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button type="button" class="btn btn-primary" style="padding: 10px 16px; font-size: 0.88rem;" data-action="add-flashcard">カードを追加</button>
-              <button type="button" class="btn btn-secondary" id="deleteCurrentCardBtn" style="flex: 0 0 auto; padding: 10px 14px; font-size: 0.84rem; color: var(--danger); display: none;" data-action="delete-current-flashcard">🗑️ 表示中のカードを削除</button>
+              <button type="button" class="btn btn-primary" style="padding: 10px 16px; font-size: 0.88rem;" data-action="add-flashcard">1枚追加</button>
+              <button type="button" class="btn btn-secondary" id="sendCardToWeaknessBtn" style="flex: 0 0 auto; padding: 10px 14px; font-size: 0.84rem; color: var(--accent); border-color: var(--accent); display: none;" data-action="send-card-to-weakness">📌 弱点ノートへ送る</button>
+              <button type="button" class="btn btn-secondary" id="openManageCardsBtn" style="flex: 0 0 auto; padding: 10px 14px; font-size: 0.84rem; display: none;" data-action="open-manage-cards-modal">📋 一覧・まとめて削除</button>
+              <button type="button" class="btn btn-secondary" id="clearMasteredCardsBtn" style="flex: 0 0 auto; padding: 10px 14px; font-size: 0.84rem; color: var(--break-color); border-color: var(--break-color); display: none;" data-action="clear-mastered-cards">✨ 習得済みを整理</button>
+              <button type="button" class="btn btn-secondary" id="deleteCurrentCardBtn" style="flex: 0 0 auto; padding: 10px 14px; font-size: 0.84rem; color: var(--danger); display: none;" data-action="delete-current-flashcard">🗑️ 表示中の1枚を削除</button>
             </div>
           </div>
         </div>
 
-        <!-- パネルB: 間違い直し・弱点ノート -->
+        <!-- パネルB: 間違い直し・弱点ノート（選択式チップ＋単元名省略OK） -->
         <div id="labPanelWeakness" style="display: none;">
           <div class="lab-form-box">
-            <strong style="font-size: 0.88rem;">✍️ 間違えた問題をストック（<span id="weaknessFormSubjectLabel">国語</span>）</strong>
+            <div class="lab-form-header">
+              <strong style="font-size: 0.88rem;">✍️ 間違えた問題をタップでストック（<span id="weaknessFormSubjectLabel">国語</span>）</strong>
+              <button type="button" class="quick-chip-btn" id="lastUsedUnitBtn" style="display: none; border-color: var(--primary); color: var(--primary);" data-action="apply-last-unit"></button>
+            </div>
             <div class="lab-input-row">
-              <input type="text" class="lab-input" id="weaknessUnitInput" placeholder="単元名（例: 二次関数の最大最小）">
+              <input type="text" class="lab-input" id="weaknessUnitInput" placeholder="単元名（空欄のままでも自動番号で記録OK）">
               <select class="lab-input" id="weaknessCauseSelect">
                 <option value="公式・知識不足">原因：公式・知識不足</option>
                 <option value="計算・ケアレスミス">原因：計算・ケアレスミス</option>
@@ -2041,7 +2196,19 @@
                 <option value="時間切れ">原因：時間切れ</option>
               </select>
             </div>
-            <input type="text" class="lab-input" id="weaknessSolutionInput" placeholder="次どう解くか・ポイント（例: 軸と定義域の位置関係で3パターン場合分けする）">
+
+            <div>
+              <span style="font-size: 0.76rem; font-weight: 700; color: var(--sub-text); display: block; margin-bottom: 5px;">⚡ ワンタップ対策チップ（選ぶだけでもOK・複数可）</span>
+              <div class="quick-chip-group" id="weaknessQuickChips">
+                <button type="button" class="quick-chip-btn" data-action="toggle-weakness-chip" data-chip="公式・語句を覚え直す">公式・語句を覚え直す</button>
+                <button type="button" class="quick-chip-btn" data-action="toggle-weakness-chip" data-chip="符号・計算ミスに注意">符号・計算ミスに注意</button>
+                <button type="button" class="quick-chip-btn" data-action="toggle-weakness-chip" data-chip="問題文の条件に線を引く">問題文の条件に線を引く</button>
+                <button type="button" class="quick-chip-btn" data-action="toggle-weakness-chip" data-chip="図や表を書いて整理する">図や表を書いて整理する</button>
+                <button type="button" class="quick-chip-btn" data-action="toggle-weakness-chip" data-chip="類題を3問解き直す">類題を3問解き直す</button>
+              </div>
+            </div>
+
+            <input type="text" class="lab-input" id="weaknessSolutionInput" placeholder="自由メモ（空欄でも上のチップや原因から自動入力されます）">
             <button type="button" class="btn btn-primary" style="padding: 10px 16px; font-size: 0.88rem;" data-action="add-weakness">弱点ノートに記録する</button>
           </div>
 
@@ -2057,6 +2224,65 @@
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- 📋 カード一覧・まとめて削除モーダル -->
+  <div class="modal-overlay" id="manageCardsModal" data-action="close-modal-overlay" data-modal-id="manageCardsModal">
+    <div class="modal-card" style="max-width: 560px;">
+      <button type="button" class="modal-close" data-action="close-modal" data-modal-id="manageCardsModal" aria-label="閉じる">✕</button>
+      <h2 style="font-weight: 800;">📋 暗記カード一覧・整理（<span id="manageCardsSubjectLabel">国語</span>）</h2>
+      <p style="font-size: 0.82rem; color: var(--sub-text); margin-top: 4px;">
+        チェックを入れたカードだけを削除したり、習得済みカードや教科全体を一括整理できます。
+      </p>
+
+      <div class="manage-cards-toolbar">
+        <label style="display: inline-flex; align-items: center; gap: 7px; font-size: 0.84rem; font-weight: 800; cursor: pointer;">
+          <input type="checkbox" id="manageCardsSelectAll" style="width: 17px; height: 17px; accent-color: var(--primary);">
+          <span>すべて選択 / 解除</span>
+        </label>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <button type="button" class="stat-edit-btn" style="margin-top:0; border-color: var(--break-color); color: var(--break-color);" data-action="clear-mastered-cards">✨ 習得済みだけ整理</button>
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--sub-text); align-self: center;" id="manageCardsCountLabel">全0枚</span>
+        </div>
+      </div>
+
+      <div class="manage-cards-list" id="manageCardsList"></div>
+
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button type="button" class="btn btn-primary" id="deleteSelectedCardsBtn" style="flex: 2; min-width: 160px; font-size: 0.88rem;" data-action="delete-selected-cards" disabled>
+          🗑️ 選択した0枚を削除
+        </button>
+        <button type="button" class="btn btn-danger" id="deleteAllSubjectCardsBtn" style="flex: 1; min-width: 140px; font-size: 0.86rem;" data-action="confirm-delete-all-cards">
+          この教科を全削除
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📥 テキストから一括追加（コピペ貼り付け）モーダル -->
+  <div class="modal-overlay" id="bulkCardModal" data-action="close-modal-overlay" data-modal-id="bulkCardModal">
+    <div class="modal-card" style="max-width: 520px;">
+      <button type="button" class="modal-close" data-action="close-modal" data-modal-id="bulkCardModal" aria-label="閉じる">✕</button>
+      <h2 style="font-weight: 800;">📥 テキストから一括追加（<span id="bulkCardSubjectLabel">国語</span>）</h2>
+      <p style="font-size: 0.82rem; color: var(--sub-text); margin-top: 4px; line-height: 1.5;">
+        1行につき1枚のカードとして一気に登録できます。<br>
+        AIで作った単語リストや、Excel・スプレッドシートの表をそのまま貼り付けてください。
+      </p>
+
+      <div class="ai-summary-banner" style="margin-top: 10px; margin-bottom: 10px; font-size: 0.79rem;">
+        <strong>💡 対応している区切り文字（自動判定）</strong><br>
+        ・<code>問題｜答え</code> または <code>問題 | 答え</code><br>
+        ・<code>問題：答え</code> または <code>問題 : 答え</code><br>
+        ・スプレッドシート／Excelのコピペ（タブ区切り）
+      </div>
+
+      <textarea class="lab-textarea" id="bulkCardTextarea" placeholder="例：&#10;apple｜りんご&#10;library｜図書館&#10;necessary｜必要な"></textarea>
+
+      <div style="display: flex; gap: 10px; margin-top: 14px;">
+        <button type="button" class="btn btn-secondary" data-action="close-modal" data-modal-id="bulkCardModal">キャンセル</button>
+        <button type="button" class="btn btn-primary" data-action="execute-bulk-cards">✨ まとめてカード化する</button>
+      </div>
+    </div>
   </div>
 
   <!-- 🎨 着せ替えテーマ・セレクター モーダル -->
@@ -2261,10 +2487,10 @@
         <div class="help-item">
           <div class="help-icon">🧠</div>
           <div class="help-content">
-            <h4>4. 暗記・弱点ラボ（忘却曲線カード & 弱点ノート）</h4>
-            <p>画面下部の「🧠 暗記・弱点ラボ」には2つの学習ツールを搭載しています。<br>
-            ・<strong>忘却曲線フラッシュカード</strong>：答えを見た後に「もう一回 / 微妙 / 完璧！」を選ぶと、苦手なカードほど優先度が上がり高頻度で再出題されます。<br>
-            ・<strong>間違い直し・弱点ノート</strong>：間違えた単元・原因・次回の対策をストックし、「未克服だけ表示」でテスト直前に一気に復習できます。</p>
+            <h4>4. 暗記・弱点ラボ（一括インポート・一括整理 & 0文字弱点ストック）</h4>
+            <p>画面下部の「🧠 暗記・弱点ラボ」には2つの高速学習ツールを搭載しています。<br>
+            ・<strong>忘却曲線フラッシュカード</strong>：「📥 テキストから一括追加」で一括登録でき、苦手なカードは「📌 弱点ノートへ送る」で1タップ転送も可能。「📋 一覧・まとめて削除」や「✨ 習得済みを整理」で整理も簡単です。<br>
+            ・<strong>間違い直し・弱点ノート</strong>：単元名が空欄のままでも自動連番で記録でき、直前の単元履歴や対策チップでキーボードを使わずストックできます。</p>
           </div>
         </div>
 
@@ -2370,9 +2596,14 @@
         // 第3機能：暗記カード & 弱点ノート
         flashcards: { '国語': [], '数学': [], '英語': [], '理科': [], '社会': [], 'その他': [] },
         weaknesses: { '国語': [], '数学': [], '英語': [], '理科': [], '社会': [], 'その他': [] },
+        lastUsedUnits: { '国語': '', '数学': '', '英語': '', '理科': '', '社会': '', 'その他': '' },
         labActiveTab: 'cards',
         currentCardId: null,
         isCardFlipped: false,
+        selectedWeaknessChips: [],
+        selectedCardIdsForDelete: new Set(),
+        confirmDeleteAllArmed: false,
+        confirmDeleteAllTimer: null,
 
         // Web Audio API 環境音ミキサー状態
         soundPreset: 'none',
@@ -2636,6 +2867,7 @@
             todos: state.todos,
             flashcards: state.flashcards,
             weaknesses: state.weaknesses,
+            lastUsedUnits: state.lastUsedUnits,
             soundSettings: {
               preset: state.soundPreset,
               volume: state.soundVolume,
@@ -2671,6 +2903,7 @@
           if (parsed.todos) Object.assign(state.todos, parsed.todos);
           if (parsed.flashcards) Object.assign(state.flashcards, parsed.flashcards);
           if (parsed.weaknesses) Object.assign(state.weaknesses, parsed.weaknesses);
+          if (parsed.lastUsedUnits) Object.assign(state.lastUsedUnits, parsed.lastUsedUnits);
           if (parsed.soundSettings) {
             state.soundPreset = parsed.soundSettings.preset || 'none';
             state.soundVolume = typeof parsed.soundSettings.volume === 'number' ? parsed.soundSettings.volume : 0.4;
@@ -2763,6 +2996,10 @@
         if (cardFormLabel) cardFormLabel.textContent = subject;
         const weakFormLabel = document.getElementById('weaknessFormSubjectLabel');
         if (weakFormLabel) weakFormLabel.textContent = subject;
+        const bulkLabel = document.getElementById('bulkCardSubjectLabel');
+        if (bulkLabel) bulkLabel.textContent = subject;
+        const manageLabel = document.getElementById('manageCardsSubjectLabel');
+        if (manageLabel) manageLabel.textContent = subject;
         if (!state.isBreakMode) {
           dom.progressCircle.style.stroke = conf.color;
         }
@@ -2802,6 +3039,7 @@
         }
         state.currentCardId = null;
         state.isCardFlipped = false;
+        state.selectedCardIdsForDelete.clear();
         applySubjectTheme(subject);
         renderSubjectTabs();
         renderTodos();
@@ -2972,6 +3210,18 @@
         document.getElementById('labPanelCards').style.display = state.labActiveTab === 'cards' ? 'block' : 'none';
         document.getElementById('labPanelWeakness').style.display = state.labActiveTab === 'weakness' ? 'block' : 'none';
 
+        // 直前に使った単元チップの表示制御
+        const lastUnitBtn = document.getElementById('lastUsedUnitBtn');
+        const savedUnit = state.lastUsedUnits[sub] || '';
+        if (lastUnitBtn) {
+          if (savedUnit) {
+            lastUnitBtn.style.display = 'inline-block';
+            lastUnitBtn.textContent = `🕒 さっきの単元：${savedUnit}`;
+          } else {
+            lastUnitBtn.style.display = 'none';
+          }
+        }
+
         let activeCard = cards.find(c => c.id === state.currentCardId);
         if (!activeCard && cards.length > 0) {
           activeCard = pickNextFlashcard(sub);
@@ -2982,17 +3232,32 @@
         const cardText = document.getElementById('flashcardText');
         const cardHint = document.getElementById('flashcardHint');
         const ratingRow = document.getElementById('srRatingRow');
+        const sendWeakBtn = document.getElementById('sendCardToWeaknessBtn');
         const deleteBtn = document.getElementById('deleteCurrentCardBtn');
+        const manageBtn = document.getElementById('openManageCardsBtn');
+        const clearMasteredBtn = document.getElementById('clearMasteredCardsBtn');
+
+        // 一覧・まとめて削除＆習得済み整理ボタンの表示制御
+        if (manageBtn) {
+          manageBtn.style.display = cards.length > 0 ? 'inline-flex' : 'none';
+          manageBtn.textContent = `📋 一覧・まとめて削除 (${cards.length})`;
+        }
+        if (clearMasteredBtn) {
+          clearMasteredBtn.style.display = masteredCount > 0 ? 'inline-flex' : 'none';
+          clearMasteredBtn.textContent = `✨ 習得済みを整理 (${masteredCount}枚)`;
+        }
 
         if (!activeCard) {
           sidePill.textContent = 'カード未登録';
           sidePill.classList.remove('back');
           levelPill.textContent = '';
           cardText.textContent = `「${sub}」の暗記カードを追加して一問一答を始めよう！`;
-          cardHint.textContent = '下のフォームから問題と答えを登録できます';
+          cardHint.textContent = '下のフォームや「テキストから一括追加」で登録できます';
           ratingRow.style.display = 'none';
+          if (sendWeakBtn) sendWeakBtn.style.display = 'none';
           deleteBtn.style.display = 'none';
         } else {
+          if (sendWeakBtn) sendWeakBtn.style.display = 'inline-flex';
           deleteBtn.style.display = 'inline-flex';
           const masteryLabel = (activeCard.level || 0) >= 2 ? '✨ 習得済み' : (activeCard.weight || 3) >= 5 ? '🔥 要集中復習' : '📖 学習中';
           levelPill.textContent = `${masteryLabel}（出題優先度: ${activeCard.weight || 3}）`;
@@ -3023,7 +3288,7 @@
             <div class="empty-state" style="min-height: 150px;">
               <div class="empty-state-icon">🎯</div>
               <div class="empty-state-title">${onlyUnresolved ? '未克服の弱点はありません！' : 'まだ弱点ノートがありません'}</div>
-              <div class="empty-state-sub">模試や問題集で間違えた単元・原因をストックすると、テスト直前に一気に復習できます。</div>
+              <div class="empty-state-sub">対策チップをタップするだけで、単元名が空欄でも即座にストックできます。</div>
             </div>
           `;
         } else {
@@ -3045,6 +3310,151 @@
             </div>
           `).join('');
         }
+      }
+
+      // --- 📋 カード一覧・まとめて削除モーダル描画＆操作 ---
+      function renderManageCardsModal() {
+        const sub = state.currentSubject;
+        const cards = state.flashcards[sub] || [];
+
+        document.getElementById('manageCardsSubjectLabel').textContent = sub;
+        document.getElementById('manageCardsCountLabel').textContent = `全${cards.length}枚`;
+
+        const validIds = new Set(cards.map(c => c.id));
+        state.selectedCardIdsForDelete.forEach(id => {
+          if (!validIds.has(id)) state.selectedCardIdsForDelete.delete(id);
+        });
+
+        const selectAllEl = document.getElementById('manageCardsSelectAll');
+        if (selectAllEl) {
+          selectAllEl.checked = cards.length > 0 && state.selectedCardIdsForDelete.size === cards.length;
+        }
+
+        const listEl = document.getElementById('manageCardsList');
+        if (cards.length === 0) {
+          listEl.innerHTML = `
+            <div class="empty-state" style="min-height: 140px;">
+              <div class="empty-state-icon">🃏</div>
+              <div class="empty-state-title">この教科のカードはありません</div>
+              <div class="empty-state-sub">「テキストから一括追加」や「1枚追加」で登録できます。</div>
+            </div>
+          `;
+        } else {
+          listEl.innerHTML = cards.map(card => {
+            const isChecked = state.selectedCardIdsForDelete.has(card.id);
+            const isMastered = (card.level || 0) >= 2;
+            const badgeHtml = isMastered
+              ? '<span class="manage-card-badge mastered">✨ 習得済み</span>'
+              : `<span class="manage-card-badge">優先度 ${card.weight || 3}</span>`;
+
+            return `
+              <div class="manage-card-row ${isChecked ? 'checked' : ''}" data-action="toggle-manage-card" data-card-id="${card.id}">
+                <input type="checkbox" ${isChecked ? 'checked' : ''} tabindex="-1">
+                <div class="manage-card-body">
+                  <div class="manage-card-front">${escapeHtml(card.front)}</div>
+                  <div class="manage-card-back">${escapeHtml(card.back)}</div>
+                </div>
+                ${badgeHtml}
+              </div>
+            `;
+          }).join('');
+        }
+
+        const delSelectedBtn = document.getElementById('deleteSelectedCardsBtn');
+        const selCount = state.selectedCardIdsForDelete.size;
+        delSelectedBtn.textContent = `🗑️ 選択した${selCount}枚を削除`;
+        delSelectedBtn.disabled = selCount === 0;
+        delSelectedBtn.style.opacity = selCount === 0 ? '0.5' : '1';
+
+        const delAllBtn = document.getElementById('deleteAllSubjectCardsBtn');
+        delAllBtn.disabled = cards.length === 0;
+        delAllBtn.style.opacity = cards.length === 0 ? '0.5' : '1';
+      }
+
+      function resetDeleteAllArming() {
+        state.confirmDeleteAllArmed = false;
+        clearTimeout(state.confirmDeleteAllTimer);
+        const btn = document.getElementById('deleteAllSubjectCardsBtn');
+        if (btn) btn.textContent = 'この教科を全削除';
+      }
+
+      function openManageCardsModal() {
+        state.selectedCardIdsForDelete.clear();
+        resetDeleteAllArming();
+        renderManageCardsModal();
+        openModal('manageCardsModal');
+      }
+
+      function deleteSelectedFlashcards() {
+        const sub = state.currentSubject;
+        const delSet = state.selectedCardIdsForDelete;
+        if (delSet.size === 0) return;
+
+        const removedCount = delSet.size;
+        state.flashcards[sub] = (state.flashcards[sub] || []).filter(c => !delSet.has(c.id));
+        if (delSet.has(state.currentCardId)) {
+          state.currentCardId = null;
+          state.isCardFlipped = false;
+        }
+        delSet.clear();
+        resetDeleteAllArming();
+        saveState();
+        renderLabView();
+        renderManageCardsModal();
+        showToast(`🗑️ 選択した ${removedCount}枚のカードを削除しました`);
+      }
+
+      function executeDeleteAllSubjectCards() {
+        const sub = state.currentSubject;
+        const cards = state.flashcards[sub] || [];
+        if (cards.length === 0) return;
+
+        if (!state.confirmDeleteAllArmed) {
+          state.confirmDeleteAllArmed = true;
+          const btn = document.getElementById('deleteAllSubjectCardsBtn');
+          if (btn) btn.textContent = `⚠️ 本当に全${cards.length}枚削除？`;
+          clearTimeout(state.confirmDeleteAllTimer);
+          state.confirmDeleteAllTimer = setTimeout(() => {
+            resetDeleteAllArming();
+          }, 4000);
+          return;
+        }
+
+        const total = cards.length;
+        state.flashcards[sub] = [];
+        state.currentCardId = null;
+        state.isCardFlipped = false;
+        state.selectedCardIdsForDelete.clear();
+        resetDeleteAllArming();
+        saveState();
+        renderLabView();
+        renderManageCardsModal();
+        closeModal('manageCardsModal');
+        showToast(`🗑️ 「${sub}」のカード全${total}枚を削除しました`);
+      }
+
+      function clearMasteredFlashcards() {
+        const sub = state.currentSubject;
+        const cards = state.flashcards[sub] || [];
+        const mastered = cards.filter(c => (c.level || 0) >= 2);
+        if (mastered.length === 0) {
+          showToast('✨ 習得済み（level 2以上）のカードはありません');
+          return;
+        }
+
+        const removedCount = mastered.length;
+        state.flashcards[sub] = cards.filter(c => (c.level || 0) < 2);
+        if (!state.flashcards[sub].some(c => c.id === state.currentCardId)) {
+          state.currentCardId = null;
+          state.isCardFlipped = false;
+        }
+        state.selectedCardIdsForDelete.clear();
+        saveState();
+        renderLabView();
+        if (document.getElementById('manageCardsModal').classList.contains('active')) {
+          renderManageCardsModal();
+        }
+        showToast(`✨ 習得済みの ${removedCount}枚を整理・削除しました！`);
       }
 
       function addFlashcard() {
@@ -3073,6 +3483,83 @@
         showToast('🧠 新しい暗記カードを追加しました！');
       }
 
+      function sendCurrentCardToWeakness() {
+        const sub = state.currentSubject;
+        const cards = state.flashcards[sub] || [];
+        const card = cards.find(c => c.id === state.currentCardId);
+        if (!card) return;
+
+        state.weaknesses[sub].unshift({
+          unit: card.front,
+          cause: '原因：公式・知識不足',
+          solution: `答え：${card.back}`,
+          resolved: false
+        });
+        saveState();
+        renderLabView();
+        showToast('📌 弱点ノートへ転送しました！');
+      }
+
+      // ① テキスト丸ごと一括インポート処理
+      function parseAndAddBulkCards() {
+        const textarea = document.getElementById('bulkCardTextarea');
+        const rawText = textarea.value;
+        const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+        if (lines.length === 0) {
+          showToast('⚠️ 貼り付けるテキストを入力してください');
+          return;
+        }
+
+        const addedCards = [];
+        lines.forEach((line, idx) => {
+          let front = '';
+          let back = '';
+
+          if (line.includes('\t')) {
+            const parts = line.split('\t');
+            front = parts[0].trim();
+            back = parts.slice(1).join(' ').trim();
+          } else if (/[｜|]/.test(line)) {
+            const match = line.match(/^(.+?)[｜|](.+)$/);
+            if (match) {
+              front = match[1].trim();
+              back = match[2].trim();
+            }
+          } else if (/[：:]/.test(line)) {
+            const match = line.match(/^(.+?)[：:](.+)$/);
+            if (match) {
+              front = match[1].trim();
+              back = match[2].trim();
+            }
+          }
+
+          if (front && back) {
+            addedCards.push({
+              id: `${Date.now()}_${idx}_${Math.random().toString(36).slice(2, 6)}`,
+              front,
+              back,
+              weight: 4,
+              level: 0
+            });
+          }
+        });
+
+        if (addedCards.length === 0) {
+          showToast('⚠️ 「問題｜答え」の形式で認識できる行が見つかりませんでした');
+          return;
+        }
+
+        state.flashcards[state.currentSubject].push(...addedCards);
+        state.currentCardId = addedCards[0].id;
+        state.isCardFlipped = false;
+        textarea.value = '';
+        saveState();
+        renderLabView();
+        closeModal('bulkCardModal');
+        showToast(`✨ ${state.currentSubject}に ${addedCards.length}枚のカードを一括追加しました！`);
+      }
+
       function rateFlashcard(rating) {
         const cards = state.flashcards[state.currentSubject] || [];
         const card = cards.find(c => c.id === state.currentCardId);
@@ -3095,6 +3582,7 @@
         renderLabView();
       }
 
+      // 高速連打対応：確認なしで即削除＆次の問題カードを自動セット
       function deleteCurrentFlashcard() {
         const cards = state.flashcards[state.currentSubject] || [];
         const idx = cards.findIndex(c => c.id === state.currentCardId);
@@ -3102,29 +3590,62 @@
         cards.splice(idx, 1);
         state.currentCardId = null;
         state.isCardFlipped = false;
+        if (cards.length > 0) {
+          pickNextFlashcard(state.currentSubject);
+        }
         saveState();
         renderLabView();
-        showToast('🗑️ カードを削除しました');
+      }
+
+      // ③ 弱点ノートの選択式チップ＋テキスト省略OK
+      function toggleWeaknessChip(chipText) {
+        const idx = state.selectedWeaknessChips.indexOf(chipText);
+        if (idx === -1) {
+          state.selectedWeaknessChips.push(chipText);
+        } else {
+          state.selectedWeaknessChips.splice(idx, 1);
+        }
+        document.querySelectorAll('#weaknessQuickChips .quick-chip-btn').forEach(btn => {
+          btn.classList.toggle('active', state.selectedWeaknessChips.includes(btn.dataset.chip));
+        });
       }
 
       function addWeaknessNote() {
+        const sub = state.currentSubject;
         const unitEl = document.getElementById('weaknessUnitInput');
         const causeEl = document.getElementById('weaknessCauseSelect');
         const solEl = document.getElementById('weaknessSolutionInput');
-        const unit = unitEl.value.trim();
-        const solution = solEl.value.trim();
-        if (!unit || !solution) {
-          showToast('⚠️ 単元名と「次どう解くか」を入力してください');
-          return;
+        const rawUnit = unitEl.value.trim();
+        const cause = causeEl.value;
+        const customMemo = solEl.value.trim();
+
+        let unit = rawUnit;
+        if (unit) {
+          state.lastUsedUnits[sub] = unit;
+        } else {
+          const nextNum = (state.weaknesses[sub] || []).length + 1;
+          const now = new Date();
+          unit = `${sub} 弱点 #${nextNum}（${now.getMonth() + 1}/${now.getDate()}）`;
         }
-        state.weaknesses[state.currentSubject].unshift({
+
+        const parts = [...state.selectedWeaknessChips];
+        if (customMemo) parts.push(customMemo);
+        const solution = parts.length > 0
+          ? parts.join(' ／ ')
+          : `${cause.replace(/^原因：/, '')}を意識して類題を解き直す`;
+
+        state.weaknesses[sub].unshift({
           unit,
-          cause: causeEl.value,
+          cause,
           solution,
           resolved: false
         });
+
         unitEl.value = '';
         solEl.value = '';
+        state.selectedWeaknessChips = [];
+        document.querySelectorAll('#weaknessQuickChips .quick-chip-btn').forEach(btn => btn.classList.remove('active'));
+
         saveState();
         renderLabView();
         showToast('❌ 弱点ノートに記録しました！');
@@ -3884,6 +4405,9 @@
       function closeModal(modalId) {
         const el = document.getElementById(modalId);
         if (el) el.classList.remove('active');
+        if (modalId === 'manageCardsModal') {
+          resetDeleteAllArming();
+        }
       }
 
       function navigateTo(pageId) {
@@ -3976,8 +4500,50 @@
             case 'add-flashcard':
               addFlashcard();
               break;
+            case 'send-card-to-weakness':
+              sendCurrentCardToWeakness();
+              break;
+            case 'open-bulk-card-modal':
+              document.getElementById('bulkCardSubjectLabel').textContent = state.currentSubject;
+              openModal('bulkCardModal');
+              break;
+            case 'execute-bulk-cards':
+              parseAndAddBulkCards();
+              break;
+            case 'open-manage-cards-modal':
+              openManageCardsModal();
+              break;
+            case 'toggle-manage-card': {
+              const cardId = actionEl.dataset.cardId;
+              if (state.selectedCardIdsForDelete.has(cardId)) {
+                state.selectedCardIdsForDelete.delete(cardId);
+              } else {
+                state.selectedCardIdsForDelete.add(cardId);
+              }
+              renderManageCardsModal();
+              break;
+            }
+            case 'delete-selected-cards':
+              deleteSelectedFlashcards();
+              break;
+            case 'confirm-delete-all-cards':
+              executeDeleteAllSubjectCards();
+              break;
+            case 'clear-mastered-cards':
+              clearMasteredFlashcards();
+              break;
             case 'delete-current-flashcard':
               deleteCurrentFlashcard();
+              break;
+            case 'apply-last-unit': {
+              const savedUnit = state.lastUsedUnits[state.currentSubject];
+              if (savedUnit) {
+                document.getElementById('weaknessUnitInput').value = savedUnit;
+              }
+              break;
+            }
+            case 'toggle-weakness-chip':
+              toggleWeaknessChip(actionEl.dataset.chip);
               break;
             case 'add-weakness':
               addWeaknessNote();
@@ -4068,6 +4634,19 @@
             toggleTodo(Number(e.target.dataset.index));
           }
         });
+
+        const selectAllCheck = document.getElementById('manageCardsSelectAll');
+        if (selectAllCheck) {
+          selectAllCheck.addEventListener('change', (e) => {
+            const cards = state.flashcards[state.currentSubject] || [];
+            if (e.target.checked) {
+              cards.forEach(c => state.selectedCardIdsForDelete.add(c.id));
+            } else {
+              state.selectedCardIdsForDelete.clear();
+            }
+            renderManageCardsModal();
+          });
+        }
 
         dom.timerSubjectSelect.addEventListener('change', (e) => selectSubject(e.target.value));
         dom.studyMinInput.addEventListener('change', updateTimerInputs);
