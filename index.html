@@ -167,6 +167,10 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Outfit', 'Noto Sans JP', sans-serif;
       background-color: var(--bg);
@@ -216,6 +220,7 @@
       align-items: center;
       gap: 6px;
       letter-spacing: -0.5px;
+      cursor: pointer;
     }
 
     [data-theme="monochrome"] .logo {
@@ -1873,86 +1878,186 @@
       flex-shrink: 0;
     }
 
-    /* --- ヘルプ＆バックアップモーダル専用スタイル --- */
-    .backup-box {
-      margin-top: 14px;
+    /* --- 💡 図解付きヘルプページ（page-help）専用スタイル --- */
+    .help-toc-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0 22px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background-color: var(--input-bg);
+      border: 1px solid var(--card-border);
+    }
+
+    .help-toc-chip {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1.5px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .help-toc-chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    /* ① 3ステップ クイックスタート図解グリッド */
+    .quickstart-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 14px 0 28px;
+    }
+
+    @media (max-width: 780px) {
+      .quickstart-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quickstart-card {
+      background-color: var(--input-bg);
+      border: var(--card-border-width) solid var(--card-border);
+      border-radius: 20px;
       padding: 16px;
-      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    .quickstart-step-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background-color: var(--primary);
+      color: var(--primary-text);
+      letter-spacing: 0.04em;
+    }
+
+    .quickstart-svg-box {
+      width: 100%;
+      max-width: 210px;
+      height: 112px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 8px;
+    }
+
+    .quickstart-card h4 {
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+
+    .quickstart-card p {
+      font-size: 0.8rem;
+      color: var(--sub-text);
+      line-height: 1.5;
+    }
+
+    /* ② ミニUIモックイラスト付き機能カード */
+    .help-category-title {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.04em;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--card-border);
+      margin: 26px 0 14px;
+      scroll-margin-top: 20px;
+    }
+
+    .help-feature-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .help-feature-card {
+      display: grid;
+      grid-template-columns: 185px 1fr;
+      gap: 18px;
+      align-items: center;
+      background-color: var(--input-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 20px;
+      padding: 16px 18px;
+    }
+
+    @media (max-width: 660px) {
+      .help-feature-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .help-mock-illustration {
+      width: 100%;
+      height: 116px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+
+    .help-content h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .help-content p {
+      font-size: 0.84rem;
+      color: var(--sub-text);
+      line-height: 1.6;
+    }
+
+    .help-tip-badge {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 8px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+    }
+
+    .backup-box {
+      margin-top: 10px;
+      padding: 18px 20px;
+      border-radius: 18px;
       background-color: var(--primary-light);
       border: var(--card-border-width) solid var(--primary);
       display: flex;
       flex-direction: column;
       gap: 10px;
+      scroll-margin-top: 20px;
     }
 
     .backup-actions {
       display: flex;
       gap: 10px;
-    }
-
-    .help-category-title {
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: var(--primary);
-      letter-spacing: 0.04em;
-      padding-bottom: 6px;
-      border-bottom: 1.5px solid var(--card-border);
-      margin-top: 8px;
-    }
-
-    .help-section {
-      margin-top: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-    }
-
-    .help-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      background-color: var(--input-bg);
-      border: 1px solid var(--card-border);
-      padding: 13px 14px;
-      border-radius: 16px;
-    }
-
-    .help-icon {
-      font-size: 1.25rem;
-      background-color: var(--primary-light);
-      color: var(--primary);
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .help-content h4 {
-      font-size: 0.94rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-      line-height: 1.4;
-    }
-
-    .help-content p {
-      font-size: 0.82rem;
-      color: var(--sub-text);
-      line-height: 1.55;
-    }
-
-    .help-tip-badge {
-      display: inline-block;
-      margin-top: 5px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 6px;
-      background-color: var(--card-bg);
-      border: 1px solid var(--card-border);
-      color: var(--text);
+      flex-wrap: wrap;
     }
 
     .toast {
@@ -1987,12 +2092,12 @@
     <!-- ヘッダー -->
     <header>
       <div class="brand-group">
-        <div class="logo">⏱ FOCUS TIMER</div>
+        <div class="logo" data-action="navigate" data-target="page-timer" title="タイマー画面へ">⏱ FOCUS TIMER</div>
       </div>
       <div class="header-controls">
         <button type="button" class="icon-btn" id="ambientHeaderBtn" data-action="open-sound-modal">🎧 環境音</button>
         <button type="button" class="icon-btn ai-plan-header-btn" data-action="open-ai-plan-modal">✨ AI自動計画</button>
-        <button type="button" class="icon-btn" id="helpBtn" data-action="open-help-modal">❓ ヘルプ・保存</button>
+        <button type="button" class="icon-btn" id="helpBtn" data-action="navigate" data-target="page-help">❓ ヘルプ・保存</button>
         <button type="button" class="icon-btn" id="themeToggleBtn" data-action="open-theme-modal">🎨 テーマ: 標準</button>
       </div>
     </header>
@@ -2332,6 +2437,266 @@
         </div>
       </div>
     </section>
+
+    <!-- ページ 5: 💡 図解付きヘルプページ（page-help） -->
+    <section class="page" id="page-help" aria-label="使い方図解ガイドとデータ保存">
+      <button type="button" class="back-nav-btn" data-action="navigate" data-target="page-timer">← タイマー画面に戻る</button>
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h2 style="font-weight: 800;">💡 FOCUS TIMER 図解ガイド & データ保存</h2>
+            <p style="color: var(--sub-text); font-size: 0.88rem; margin-top: 3px;">はじめての方でも直感的に使いこなせるように、画面イメージ付きでまとめました。</p>
+          </div>
+          <span class="active-subject-pill" style="border-color: var(--primary); color: var(--primary); background: var(--primary-light);">全機能完全対応</span>
+        </div>
+
+        <!-- ③ ページ内ジャンプ目次チップ -->
+        <div class="help-toc-bar" aria-label="ヘルプ目次">
+          <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-quickstart">🚀 3ステップ基本の流れ</button>
+          <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-timer">⏱ 計測・タスク・環境音</button>
+          <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-lab">🧠 暗記・弱点ラボ</button>
+          <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-ai">✨ AI自動計画 & 目標・分析</button>
+          <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-backup">💾 データ保存・復元</button>
+        </div>
+
+        <!-- ① 3ステップ クイックスタート図解（SVG） -->
+        <div class="help-category-title" id="help-sec-quickstart" style="margin-top: 8px;">🚀 まずはこれだけ！3ステップ基本の流れ</div>
+        <div class="quickstart-grid">
+          <!-- STEP 1 -->
+          <div class="quickstart-card">
+            <span class="quickstart-step-badge">STEP 1</span>
+            <div class="quickstart-svg-box">
+              <svg width="180" height="92" viewBox="0 0 180 92" fill="none">
+                <rect x="8" y="8" width="50" height="20" rx="6" fill="var(--primary)" />
+                <text x="33" y="21" text-anchor="middle" fill="var(--primary-text)" font-size="9" font-weight="800">英語</text>
+                <rect x="64" y="8" width="50" height="20" rx="6" fill="var(--input-bg)" stroke="var(--card-border)" stroke-width="1.5" />
+                <text x="89" y="21" text-anchor="middle" fill="var(--sub-text)" font-size="9" font-weight="700">数学</text>
+                <rect x="120" y="8" width="50" height="20" rx="6" fill="var(--input-bg)" stroke="var(--card-border)" stroke-width="1.5" />
+                <text x="145" y="21" text-anchor="middle" fill="var(--sub-text)" font-size="9" font-weight="700">理科</text>
+                <rect x="8" y="36" width="162" height="22" rx="8" fill="var(--primary-light)" stroke="var(--primary)" stroke-width="1.5" />
+                <circle cx="20" cy="47" r="4" fill="var(--primary)" />
+                <text x="31" y="50" fill="var(--text)" font-size="9" font-weight="800">単語帳 p.10〜20（集中対象）</text>
+                <rect x="8" y="64" width="162" height="20" rx="8" fill="var(--input-bg)" stroke="var(--card-border)" stroke-width="1" />
+                <text x="20" y="77" fill="var(--sub-text)" font-size="8.5" font-weight="700">□ ワーク問題演習</text>
+              </svg>
+            </div>
+            <h4>1. 教科とタスクを選ぶ</h4>
+            <p>勉強する教科タブを選び、タスクをタップして「集中対象」にセットします。</p>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="quickstart-card">
+            <span class="quickstart-step-badge">STEP 2</span>
+            <div class="quickstart-svg-box">
+              <svg width="180" height="92" viewBox="0 0 180 92" fill="none">
+                <circle cx="52" cy="46" r="34" stroke="var(--ring-bg)" stroke-width="7" />
+                <path d="M52 12 A 34 34 0 1 1 20 57" stroke="var(--primary)" stroke-width="7" stroke-linecap="round" />
+                <text x="52" y="50" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="800">25:00</text>
+                <rect x="102" y="18" width="68" height="22" rx="11" fill="var(--primary)" />
+                <text x="136" y="32" text-anchor="middle" fill="var(--primary-text)" font-size="9" font-weight="800">▶ スタート</text>
+                <rect x="102" y="48" width="68" height="22" rx="11" fill="var(--break-light)" stroke="var(--break-color)" stroke-width="1.5" />
+                <text x="136" y="62" text-anchor="middle" fill="var(--break-color)" font-size="8.5" font-weight="800">🌧️ 雨音連動</text>
+              </svg>
+            </div>
+            <h4>2. タイマーで集中計測</h4>
+            <p>スタートを押すと計測開始！環境音も自動再生され、終了後に学習時間が自動記録されます。</p>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="quickstart-card">
+            <span class="quickstart-step-badge">STEP 3</span>
+            <div class="quickstart-svg-box">
+              <svg width="180" height="92" viewBox="0 0 180 92" fill="none">
+                <rect x="12" y="52" width="14" height="28" rx="4" fill="var(--primary)" />
+                <rect x="32" y="34" width="14" height="46" rx="4" fill="var(--accent)" />
+                <rect x="52" y="22" width="14" height="58" rx="4" fill="var(--break-color)" />
+                <line x1="8" y1="80" x2="72" y2="80" stroke="var(--card-border)" stroke-width="1.5" />
+                <rect x="86" y="14" width="84" height="66" rx="12" fill="var(--input-bg)" stroke="var(--primary)" stroke-width="1.5" />
+                <rect x="94" y="22" width="38" height="12" rx="6" fill="var(--primary-light)" />
+                <text x="113" y="30" text-anchor="middle" fill="var(--primary)" font-size="7" font-weight="800">暗記カード</text>
+                <text x="128" y="52" text-anchor="middle" fill="var(--text)" font-size="9.5" font-weight="800">問題 ⇄ 答え</text>
+                <text x="128" y="68" text-anchor="middle" fill="var(--accent)" font-size="7.5" font-weight="700">📌 弱点ストック</text>
+              </svg>
+            </div>
+            <h4>3. グラフ分析 & 弱点復習</h4>
+            <p>「きろく」で頑張りを可視化し、「暗記・弱点ラボ」で苦手な問題だけを重点復習します。</p>
+          </div>
+        </div>
+
+        <!-- ② テーマ連動のミニUIモックイラスト付き機能ガイド -->
+        <div class="help-category-title" id="help-sec-timer">⏱ 計測・タスク管理・環境音ミキサー</div>
+        <div class="help-feature-grid">
+          <!-- 1. タイマー＆ストップウォッチ -->
+          <div class="help-feature-card">
+            <div class="help-mock-illustration">
+              <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
+                <rect x="14" y="8" width="132" height="22" rx="11" fill="var(--input-bg)" stroke="var(--card-border)" stroke-width="1.5" />
+                <rect x="17" y="11" width="60" height="16" rx="8" fill="var(--primary)" />
+                <text x="47" y="22" text-anchor="middle" fill="var(--primary-text)" font-size="8" font-weight="800">タイマー</text>
+                <text x="110" y="22" text-anchor="middle" fill="var(--sub-text)" font-size="8" font-weight="700">ストップW</text>
+                <circle cx="80" cy="63" r="24" stroke="var(--ring-bg)" stroke-width="5" />
+                <path d="M80 39 A 24 24 0 1 1 58 73" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" />
+                <text x="80" y="67" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="800">25:00</text>
+              </svg>
+            </div>
+            <div class="help-content">
+              <h4>1. タイマー & ストップウォッチ（裏画面リロード完全復元）</h4>
+              <p>設定時間カウントダウンする「タイマー」と、自由計測して「完了（記録）」ボタンで保存できる「ストップウォッチ」を切り替えられます。計測中に他アプリを開いたり画面を閉じたりしても、復帰時に経過時間を自動計算して復元します。</p>
+            </div>
+          </div>
+
+          <!-- 2. タスクごとの時間紐付け -->
+          <div class="help-feature-card">
+            <div class="help-mock-illustration">
+              <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
+                <rect x="10" y="12" width="140" height="32" rx="10" fill="var(--primary-light)" stroke="var(--primary)" stroke-width="1.5" />
+                <rect x="18" y="21" width="44" height="14" rx="5" fill="var(--primary)" />
+                <text x="40" y="31" text-anchor="middle" fill="var(--primary-text)" font-size="7.5" font-weight="800">集中対象</text>
+                <text x="68" y="31" fill="var(--text)" font-size="8.5" font-weight="800">英語長文 1題</text>
+                <rect x="122" y="21" width="22" height="14" rx="5" fill="var(--card-bg)" />
+                <text x="133" y="30.5" text-anchor="middle" fill="var(--sub-text)" font-size="7" font-weight="700">50分</text>
+                <rect x="10" y="52" width="140" height="30" rx="10" fill="var(--input-bg)" stroke="var(--card-border)" stroke-width="1" />
+                <text x="22" y="70" fill="var(--sub-text)" font-size="8.5" font-weight="700">☑ 漢字プリント（完了）</text>
+              </svg>
+            </div>
+            <div class="help-content">
+              <h4>2. 教科別Todo & タスクごとの時間紐付け</h4>
+              <p>6教科ごとにタスクを管理できます。リストの項目をタップして「集中対象」に選ぶと、その課題に費やした累計時間もバッジとして個別に記録されます。</p>
+              <span class="help-tip-badge">💡 タスク未選択のまま計測すると教科全体の時間として記録されます</span>
+            </div>
+          </div>
+
+          <!-- 3. 集中サウンド＆環境音ミキサー -->
+          <div class="help-feature-card">
+            <div class="help-mock-illustration">
+              <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
+                <rect x="12" y="12" width="64" height="32" rx="10" fill="var(--primary-light)" stroke="var(--primary)" stroke-width="1.5" />
+                <text x="44" y="31" text-anchor="middle" fill="var(--primary)" font-size="8.5" font-weight="800">🌧️ 雨音</text>
+                <rect x="84" y="12" width="64" height="32" rx="10" fill="var(--input-bg)" stroke="var(--card-border)" stroke-width="1" />
+                <text x="116" y="31" text-anchor="middle" fill="var(--sub-text)" font-size="8" font-weight="700">☕ カフェ</text>
+                <line x1="18" y1="62" x2="142" y2="62" stroke="var(--ring-bg)" stroke-width="5" stroke-linecap="round" />
+                <line x1="18" y1="62" x2="92" y2="62" stroke="var(--primary)" stroke-width="5" stroke-linecap="round" />
+                <circle cx="92" cy="62" r="7" fill="var(--primary)" />
+                <text x="80" y="83" text-anchor="middle" fill="var(--break-color)" font-size="7.5" font-weight="800">⏱️ タイマー稼働中のみ自動再生</text>
+              </svg>
+            </div>
+            <div class="help-content">
+              <h4>3. 集中サウンド＆環境音ミキサー（Web Audio API）</h4>
+              <p>外部音源を使わずブラウザ内で合成する<strong>「🌧️ 雨音」「☕ カフェピンクノイズ」「🔥 焚き火」</strong>を流せます。「集中タイマー稼働中だけ自動再生」をONにすると、勉強開始と同時に音が流れ、休憩や一時停止で自動停止します。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="help-category-title" id="help-sec-lab">🧠 暗記・弱点ラボ（フラッシュカード & 弱点ノート）</div>
+        <div class="help-feature-grid">
+          <!-- 4. 自由フォルダ & 忘却曲線カード -->
+          <div class="help-feature-card">
+            <div class="help-mock-illustration">
+              <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
+                <rect x="12" y="8" width="44" height="16" rx="8" fill="var(--primary)" />
+                <text x="34" y="19" text-anchor="middle" fill="var(--primary-text)" font-size="7" font-weight="800">📂 中2英語</text>
+                <rect x="60" y="8" width="48" height="16" rx="8" fill="var(--card-bg)" stroke="var(--primary)" stroke-dasharray="2 2" />
+                <text x="84" y="19" text-anchor="middle" fill="var(--primary)" font-size="7" font-weight="800">＋追加</text>
+                <rect x="12" y="29" width="136" height="40" rx="10" fill="var(--input-bg)" stroke="var(--primary)" stroke-width="1.5" />
+                <text x="80" y="53" text-anchor="middle" fill="var(--text)" font-size="9.5" font-weight="800">necessary ⇄ 必要な</text>
+                <rect x="12" y="74" width="42" height="15" rx="6" fill="rgba(239,68,68,0.15)" />
+                <text x="33" y="84" text-anchor="middle" fill="var(--danger)" font-size="7" font-weight="800">もう一回</text>
+                <rect x="59" y="74" width="42" height="15" rx="6" fill="rgba(245,158,11,0.15)" />
+                <text x="80" y="84" text-anchor="middle" fill="var(--accent)" font-size="7" font-weight="800">微妙</text>
+                <rect x="106" y="74" width="42" height="15" rx="6" fill="var(--break-light)" />
+                <text x="127" y="84" text-anchor="middle" fill="var(--break-color)" font-size="7" font-weight="800">✨ 完璧</text>
+              </svg>
+            </div>
+            <div class="help-content">
+              <h4>4. 自由フォルダ分け & 忘却曲線フラッシュカード</h4>
+              <p>「＋ フォルダ追加」から学年（中1・高2など）やテスト範囲ごとにフォルダを作成でき、選んだフォルダだけで出題を絞り込めます。<br>
+              カードの答えをめくって<strong>「もう一回 / 微妙 / 完璧」</strong>を選ぶと、苦手なカードほど優先的に再出題されます。「📥 テキストから一括追加（問題｜答え）」や「📋 一覧・まとめて削除」も完備しています。</p>
+            </div>
+          </div>
+
+          <!-- 5. 間違い直し・弱点ノート -->
+          <div class="help-feature-card">
+            <div class="help-mock-illustration">
+              <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
+                <rect x="12" y="10" width="136" height="46" rx="10" fill="var(--input-bg)" stroke="var(--card-border)" stroke-width="1" />
+                <rect x="12" y="10" width="4" height="46" rx="2" fill="var(--danger)" />
+                <rect x="22" y="16" width="52" height="13" rx="4" fill="var(--primary-light)" />
+                <text x="48" y="25" text-anchor="middle" fill="var(--primary)" font-size="7" font-weight="800">📌 二次関数</text>
+                <rect x="78" y="16" width="52" height="13" rx="4" fill="rgba(239,68,68,0.15)" />
+                <text x="104" y="25" text-anchor="middle" fill="var(--danger)" font-size="7" font-weight="800">計算ミス</text>
+                <text x="22" y="44" fill="var(--text)" font-size="8" font-weight="700">💡 軸と定義域で場合分け</text>
+                <rect x="12" y="64" width="136" height="22" rx="11" fill="var(--primary)" />
+                <text x="80" y="78" text-anchor="middle" fill="var(--primary-text)" font-size="8" font-weight="800">⚡ ワンタップ対策チップで即記録</text>
+              </svg>
+            </div>
+            <div class="help-content">
+              <h4>5. 間違い直し・弱点ノート（0文字タップ登録 & カード転送）</h4>
+              <p>フォルダと「ワンタップ対策チップ」を選ぶだけで、キーボード入力なしでも素早く弱点をストックできます。また、フラッシュカード画面の<strong>「📌 弱点ノートへ送る」</strong>ボタンから苦手な問題をワンタップで転送することも可能です。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="help-category-title" id="help-sec-ai">✨ AI自動計画・目標・記録分析・着せ替え</div>
+        <div class="help-feature-grid">
+          <!-- 6. AI自動計画 -->
+          <div class="help-feature-card">
+            <div class="help-mock-illustration">
+              <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
+                <rect x="14" y="10" width="40" height="18" rx="6" fill="var(--primary)" />
+                <text x="34" y="22" text-anchor="middle" fill="var(--primary-text)" font-size="8" font-weight="800">60分</text>
+                <rect x="60" y="10" width="40" height="18" rx="6" fill="var(--input-bg)" stroke="var(--card-border)" />
+                <text x="80" y="22" text-anchor="middle" fill="var(--sub-text)" font-size="8" font-weight="700">90分</text>
+                <rect x="106" y="10" width="40" height="18" rx="6" fill="var(--input-bg)" stroke="var(--card-border)" />
+                <text x="126" y="22" text-anchor="middle" fill="var(--sub-text)" font-size="8" font-weight="700">2時間</text>
+                <rect x="14" y="36" width="132" height="22" rx="8" fill="var(--input-bg)" stroke="var(--primary)" stroke-width="1.5" />
+                <text x="22" y="50" fill="var(--text)" font-size="8" font-weight="800">STEP1 ● 数学（25分）</text>
+                <rect x="14" y="64" width="132" height="22" rx="8" fill="var(--input-bg)" stroke="var(--card-border)" stroke-width="1" />
+                <text x="22" y="78" fill="var(--sub-text)" font-size="8" font-weight="700">STEP2 ● 英語（25分）</text>
+              </svg>
+            </div>
+            <div class="help-content">
+              <h4>6. 「今日なにやる？」ワンタップ自動計画AI</h4>
+              <p>ヘッダーの「✨ AI自動計画」から空き時間（30分〜3時間）を選ぶと、遅れている教科と未完了タスクを分析して最適なセットメニューを自動生成します。ステップをタップするとタイマーへ即セットされます。</p>
+            </div>
+          </div>
+
+          <!-- 7. 目標・きろく・テーマ着せ替え -->
+          <div class="help-feature-card">
+            <div class="help-mock-illustration">
+              <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
+                <rect x="14" y="12" width="132" height="12" rx="6" fill="var(--ring-bg)" />
+                <rect x="14" y="12" width="88" height="12" rx="6" fill="var(--primary)" />
+                <text x="80" y="38" text-anchor="middle" fill="var(--primary)" font-size="8.5" font-weight="800">🎯 達成率 67% ・ 1日 1.5h</text>
+                <circle cx="38" cy="68" r="10" fill="#4f46e5" />
+                <circle cx="66" cy="68" r="10" fill="#06b6d4" />
+                <circle cx="94" cy="68" r="10" fill="#2d6a4f" />
+                <circle cx="122" cy="68" r="10" fill="#18181b" />
+              </svg>
+            </div>
+            <div class="help-content">
+              <h4>7. 目標設定・勉強時間のきろく & 5種類のテーマ着せ替え</h4>
+              <p>・<strong>🎯 目標設定</strong>：テスト日と合計目標時間から1日あたりの必要ペースを自動算出します。<br>
+              ・<strong>📊 勉強時間のきろく</strong>：円グラフ・週間グラフの確認に加え、各教科の「✏️ 修正」から手動調整も可能です。<br>
+              ・<strong>🎨 テーマ変更</strong>：標準／サイバー／ボタニカル／モノクロ／ダークの5種類を切り替えられます。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ③ データのバックアップ・復元ボックス -->
+        <div class="help-category-title" id="help-sec-backup">💾 データのバックアップ・復元</div>
+        <div class="backup-box">
+          <strong style="font-size: 0.96rem;">💾 JSONファイルで全データを安全に保存・復元</strong>
+          <p style="font-size: 0.82rem; color: var(--sub-text); line-height: 1.5;">
+            学習時間・Todo・暗記カード・弱点ノート・カスタムフォルダ・目標設定を1つのJSONファイルに書き出せます。機種変更やブラウザ履歴消去前のバックアップにご活用ください。
+          </p>
+          <div class="backup-actions">
+            <button type="button" class="btn btn-primary" style="flex: 0 0 auto; padding: 11px 18px; font-size: 0.88rem;" data-action="export-data">📥 データをファイルに保存</button>
+            <button type="button" class="btn btn-secondary" style="flex: 0 0 auto; padding: 11px 18px; font-size: 0.88rem;" data-action="trigger-import">📤 ファイルからデータを復元</button>
+            <input type="file" id="importFile" accept=".json" style="display: none;">
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- 🏷️ 自由フォルダ・単元・学年追加モーダル -->
@@ -2555,98 +2920,6 @@
       <button type="button" class="btn btn-primary" style="width: 100%;" data-action="apply-ai-plan-first">
         ▶ 1セット目の設定でタイマーを準備
       </button>
-    </div>
-  </div>
-
-  <!-- ❓ 完全版ヘルプ＆バックアップモーダル -->
-  <div class="modal-overlay" id="helpModal" data-action="close-modal-overlay" data-modal-id="helpModal">
-    <div class="modal-card">
-      <button type="button" class="modal-close" data-action="close-modal" data-modal-id="helpModal" aria-label="閉じる">✕</button>
-      <h2 style="font-weight: 800;">💡 使い方完全ガイド & データ管理</h2>
-      <p style="font-size: 0.82rem; color: var(--sub-text); margin-top: 4px;">
-        FOCUS TIMERの全機能の使い方をまとめています。データはブラウザ内に自動保存されます。
-      </p>
-
-      <!-- バックアップボックス -->
-      <div class="backup-box">
-        <strong style="font-size: 0.94rem;">💾 データのバックアップ・復元（JSON保存）</strong>
-        <p style="font-size: 0.81rem; color: var(--sub-text); line-height: 1.45;">
-          学習時間・Todo・暗記カード・弱点ノート・カスタムフォルダ・目標をまとめてファイルに書き出せます。
-        </p>
-        <div class="backup-actions">
-          <button type="button" class="btn btn-primary" style="padding: 10px 14px; font-size: 0.86rem;" data-action="export-data">📥 データを保存</button>
-          <button type="button" class="btn btn-secondary" style="padding: 10px 14px; font-size: 0.86rem;" data-action="trigger-import">📤 データを復元</button>
-          <input type="file" id="importFile" accept=".json" style="display: none;">
-        </div>
-      </div>
-
-      <div class="help-section">
-        <div class="help-category-title">⏱️ 計測・タスク・集中サポート</div>
-
-        <div class="help-item">
-          <div class="help-icon">⏱️</div>
-          <div class="help-content">
-            <h4>1. タイマー & ストップウォッチ（裏画面自動復元）</h4>
-            <p>カウントダウン式の「タイマー」と、自由計測できる「ストップウォッチ（完了ボタンで記録）」を切り替えられます。計測中に他アプリへ移動したり画面を閉じたりしても、経過時間を自動計算して正確に復元します。</p>
-          </div>
-        </div>
-
-        <div class="help-item">
-          <div class="help-icon">📋</div>
-          <div class="help-content">
-            <h4>2. 教科別Todo & タスクごとの時間紐付け</h4>
-            <p>6教科ごとにタスクを管理できます。リストのタスクをタップして「集中対象」に選ぶと、その課題に費やした累計時間も個別に記録されます。</p>
-            <span class="help-tip-badge">💡 未選択のまま計測すると教科全体の時間として加算されます</span>
-          </div>
-        </div>
-
-        <div class="help-item">
-          <div class="help-icon">🎧</div>
-          <div class="help-content">
-            <h4>3. 集中サウンド＆環境音ミキサー</h4>
-            <p>ヘッダーの「🎧 環境音」から、<strong>雨音・カフェノイズ・焚き火</strong>の3種類の環境音を再生できます。「集中タイマー稼働中だけ自動再生」をONにすると、勉強開始と同時に音が流れ、休憩や停止時に自動でミュートされます。</p>
-          </div>
-        </div>
-
-        <div class="help-category-title">🧠 学習効率化・AIプランニング</div>
-
-        <div class="help-item">
-          <div class="help-icon">🧠</div>
-          <div class="help-content">
-            <h4>4. 暗記・弱点ラボ（自由フォルダ分け・一括インポート & 弱点ストック）</h4>
-            <p>教科タブ下の「＋ フォルダ追加」から、学年（中1・高2など）やテスト範囲・単元名のフォルダを自由に作成できます。選んだフォルダだけで出題や弱点表示を絞り込めるほか、新規登録時にも自動でタグ付けされます。<br>
-            ・<strong>忘却曲線フラッシュカード</strong>：「📥 テキストから一括追加」や「📌 弱点ノートへ送る」、「📋 一覧・まとめて削除」で効率よく暗記できます。<br>
-            ・<strong>間違い直し・弱点ノート</strong>：フォルダを選んだ状態なら、単元名が空欄のままでも自動タグ付きで即記録できます。</p>
-          </div>
-        </div>
-
-        <div class="help-item">
-          <div class="help-icon">✨</div>
-          <div class="help-content">
-            <h4>5. 今日なにやる？ワンタップ自動計画AI</h4>
-            <p>ヘッダーの「✨ AI自動計画」から今日の空き時間（30分〜3時間）を選ぶと、遅れている教科と未完了タスクを分析して最適なセットメニューを自動作成します。提案されたセットをタップするとタイマーへ即座にセットされます。</p>
-          </div>
-        </div>
-
-        <div class="help-category-title">📊 目標・記録分析・着せ替え</div>
-
-        <div class="help-item">
-          <div class="help-icon">🎯</div>
-          <div class="help-content">
-            <h4>6. 目標設定 & 勉強時間のきろく（修正・リセット）</h4>
-            <p>・<strong>🎯 目標設定</strong>：テスト日と合計目標時間を入力すると、残り日数と1日あたりの必要ペースを自動計算し、達成率バーに反映します。<br>
-            ・<strong>📊 勉強時間のきろく</strong>：教科別の円グラフと直近7日間の推移グラフを確認できます。各教科カードの「✏️ 修正」から累計分の手動調整や、右上の「🗑️ 全記録をリセット」も可能です。</p>
-          </div>
-        </div>
-
-        <div class="help-item">
-          <div class="help-icon">🎨</div>
-          <div class="help-content">
-            <h4>7. 着せ替えテーマ・セレクター（全5種類）</h4>
-            <p>ヘッダーの「🎨 テーマ」ボタンから、スタンダード・サイバー（ネオン＆グラス）・ボタニカル・モノクローム・夜モード（ダーク）の5種類をワンタップで切り替えられます。</p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -4654,6 +4927,7 @@
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         const target = document.getElementById(pageId);
         if (target) target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
         if (pageId === 'page-stats') {
           updateAllCharts();
@@ -4678,6 +4952,11 @@
             case 'navigate':
               navigateTo(actionEl.dataset.target);
               break;
+            case 'scroll-help-section': {
+              const sec = document.getElementById(actionEl.dataset.section);
+              if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              break;
+            }
             case 'open-theme-modal':
               openModal('themeModal');
               break;
@@ -4697,9 +4976,6 @@
               break;
             case 'apply-ai-plan-step':
               applyAiPlanStep(Number(actionEl.dataset.stepIndex));
-              break;
-            case 'open-help-modal':
-              openModal('helpModal');
               break;
             case 'open-sound-modal':
               syncSoundModalUI();
