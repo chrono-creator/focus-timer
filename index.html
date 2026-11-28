@@ -356,7 +356,7 @@
       border-color: var(--primary);
     }
 
-    /* --- テーマ着せ替えモーダル専用グリッド --- */
+    /* --- テーマ着せ替えモーダル & オリジナル着せ替えメーカー --- */
     .theme-selector-grid {
       display: flex;
       flex-direction: column;
@@ -369,7 +369,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 14px 16px;
+      padding: 13px 16px;
       border-radius: 18px;
       border: 2px solid var(--card-border);
       background-color: var(--input-bg);
@@ -397,7 +397,7 @@
     }
 
     .theme-option-title {
-      font-size: 0.96rem;
+      font-size: 0.94rem;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -405,7 +405,7 @@
     }
 
     .theme-option-desc {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       color: var(--sub-text);
     }
 
@@ -423,6 +423,52 @@
       border: 1.5px solid rgba(128, 128, 128, 0.35);
     }
 
+    .custom-theme-maker {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      background-color: var(--input-bg);
+      border: 2px dashed var(--primary);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .custom-color-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 440px) {
+      .custom-color-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .color-picker-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .color-picker-item input[type="color"] {
+      width: 34px;
+      height: 28px;
+      border: none;
+      border-radius: 8px;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
     /* --- 第3機能「暗記・弱点ラボ」グラスモーフィズム×ダッシュボード --- */
     .lab-shell {
       background-color: var(--card-bg);
@@ -434,7 +480,6 @@
       box-shadow: var(--shadow);
     }
 
-    /* 自由作成できるフォルダ・単元チップバー */
     .lab-topic-bar {
       display: flex;
       flex-wrap: wrap;
@@ -543,8 +588,9 @@
     }
 
     .lab-subtabs {
-      display: flex;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
       background: var(--input-bg);
       border: 1px solid var(--card-border);
       padding: 5px;
@@ -552,15 +598,20 @@
       margin-bottom: 18px;
     }
 
+    @media (max-width: 640px) {
+      .lab-subtabs {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .lab-subtab-btn {
-      flex: 1;
-      padding: 11px 14px;
+      padding: 11px 10px;
       border: none;
       border-radius: 12px;
       background: transparent;
       color: var(--sub-text);
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       cursor: pointer;
       font-family: inherit;
       transition: all 0.2s ease;
@@ -570,6 +621,152 @@
       background: var(--card-bg);
       color: var(--primary);
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    }
+
+    /* --- 🎮 ミニテストモード（4択クイズ＆タイムアタック）専用UI --- */
+    .quiz-setup-box {
+      background: var(--input-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 22px;
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .quiz-mode-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 580px) {
+      .quiz-mode-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quiz-mode-card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 18px;
+      padding: 18px 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      color: var(--text);
+      transition: transform 0.15s ease, border-color 0.2s ease;
+    }
+
+    .quiz-mode-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .quiz-hud-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: var(--input-bg);
+      border: 1.5px solid var(--primary);
+      margin-bottom: 14px;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .quiz-question-card {
+      background: var(--input-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px 18px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .quiz-question-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.55;
+      word-break: break-word;
+    }
+
+    .quiz-choices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 580px) {
+      .quiz-choices-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quiz-choice-btn {
+      padding: 15px 14px;
+      border-radius: 16px;
+      border: 2px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.94rem;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.12s ease, border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .quiz-choice-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .quiz-choice-btn.correct {
+      background: var(--break-light);
+      border-color: var(--break-color);
+      color: var(--break-color);
+    }
+
+    .quiz-choice-btn.wrong {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .quiz-choice-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--card-border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+
+    .quiz-result-card {
+      background: var(--input-bg);
+      border: 2px solid var(--primary);
+      border-radius: 22px;
+      padding: 24px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     .flashcard-stage {
@@ -746,7 +943,6 @@
       outline: none;
     }
 
-    /* カード一覧・まとめて削除モーダル用リスト */
     .manage-cards-toolbar {
       display: flex;
       justify-content: space-between;
@@ -837,7 +1033,6 @@
       border-color: var(--break-color);
     }
 
-    /* ③ 弱点ノート選択式チップ */
     .quick-chip-group {
       display: flex;
       flex-wrap: wrap;
@@ -1217,7 +1412,6 @@
       white-space: nowrap;
     }
 
-    /* 3列×2行 教科タブグリッド */
     .subject-tabs {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1909,7 +2103,6 @@
       transform: translateY(-1px);
     }
 
-    /* ① 3ステップ クイックスタート図解グリッド */
     .quickstart-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1970,7 +2163,6 @@
       line-height: 1.5;
     }
 
-    /* ② ミニUIモックイラスト付き機能カード */
     .help-category-title {
       font-size: 0.86rem;
       font-weight: 800;
@@ -2199,7 +2391,7 @@
         <button type="button" class="nav-btn nav-btn-lab" data-action="navigate" data-target="page-lab">
           <div class="nav-btn-content">
             <span class="nav-btn-title">🧠 暗記・弱点ラボ</span>
-            <span class="nav-btn-sub">忘却曲線カード・間違い直し弱点ノート</span>
+            <span class="nav-btn-sub">忘却曲線カード・ミニテスト・弱点ノート</span>
           </div>
           <span class="nav-btn-icon">➔</span>
         </button>
@@ -2313,7 +2505,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
           <div>
             <h2 style="font-weight: 800;">🧠 暗記・弱点ラボ</h2>
-            <p style="color: var(--sub-text); font-size: 0.86rem; margin-top: 2px;">忘却曲線アルゴリズムによる優先出題と、間違い原因のストックで得点力を底上げします。</p>
+            <p style="color: var(--sub-text); font-size: 0.86rem; margin-top: 2px;">忘却曲線カード・ミニテスト（4択＆タイムアタック）・間違い原因ノートで得点力を底上げします。</p>
           </div>
           <span class="active-subject-pill" id="labSubjectBadge">国語モード</span>
         </div>
@@ -2339,9 +2531,11 @@
           </div>
         </div>
 
+        <!-- 3モード切替サブタブ -->
         <div class="lab-subtabs">
-          <button type="button" class="lab-subtab-btn active" id="subtabCards" data-action="set-lab-tab" data-tab="cards">🧠 忘却曲線フラッシュカード</button>
-          <button type="button" class="lab-subtab-btn" id="subtabWeakness" data-action="set-lab-tab" data-tab="weakness">❌ 間違い直し・弱点ノート</button>
+          <button type="button" class="lab-subtab-btn active" id="subtabCards" data-action="set-lab-tab" data-tab="cards">🧠 忘却曲線カード</button>
+          <button type="button" class="lab-subtab-btn" id="subtabQuiz" data-action="set-lab-tab" data-tab="quiz">🎮 ミニテスト（4択・TA）</button>
+          <button type="button" class="lab-subtab-btn" id="subtabWeakness" data-action="set-lab-tab" data-tab="weakness">❌ 弱点ノート</button>
         </div>
 
         <!-- パネルA: 忘却曲線フラッシュカード -->
@@ -2388,6 +2582,69 @@
               <button type="button" class="btn btn-secondary" id="openManageCardsBtn" style="flex: 0 0 auto; padding: 10px 14px; font-size: 0.84rem; display: none;" data-action="open-manage-cards-modal">📋 一覧・まとめて削除</button>
               <button type="button" class="btn btn-secondary" id="clearMasteredCardsBtn" style="flex: 0 0 auto; padding: 10px 14px; font-size: 0.84rem; color: var(--break-color); border-color: var(--break-color); display: none;" data-action="clear-mastered-cards">✨ 習得済みを整理</button>
               <button type="button" class="btn btn-secondary" id="deleteCurrentCardBtn" style="flex: 0 0 auto; padding: 10px 14px; font-size: 0.84rem; color: var(--danger); display: none;" data-action="delete-current-flashcard">🗑️ 表示中の1枚を削除</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- パネルC: 🎮 暗記カード・ミニテストモード（4択クイズ＆タイムアタック） -->
+        <div id="labPanelQuiz" style="display: none;">
+          <!-- 1. スタート待機画面 -->
+          <div class="quiz-setup-box" id="quizSetupView">
+            <div>
+              <h3 style="font-weight: 800; font-size: 1.12rem;">🎮 暗記カード・ミニテスト（<span id="quizScopeLabel">国語</span>）</h3>
+              <p style="font-size: 0.84rem; color: var(--sub-text); margin-top: 4px;" id="quizCardCountHint">
+                登録中のカードから自動で4択問題を生成します。間違えた問題は苦手度がUP！
+              </p>
+            </div>
+
+            <div class="quiz-mode-cards">
+              <button type="button" class="quiz-mode-card" data-action="start-quiz" data-quiz-mode="standard">
+                <span style="font-size: 1.8rem;">📝</span>
+                <strong style="font-size: 0.98rem;">じっくり4択クイズ（最大10問）</strong>
+                <span style="font-size: 0.78rem; color: var(--sub-text);">苦手カードを優先出題！解説を確認しながら確実に定着</span>
+              </button>
+
+              <button type="button" class="quiz-mode-card" data-action="start-quiz" data-quiz-mode="timeattack">
+                <span style="font-size: 1.8rem;">⚡</span>
+                <strong style="font-size: 0.98rem;">60秒タイムアタック</strong>
+                <span style="font-size: 0.78rem; color: var(--sub-text);">制限時間60秒で何問連続正解できるか挑戦！<br><b style="color: var(--primary);" id="quizHighScoreBadge">ハイスコア: 0問</b></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. クイズプレイ中画面 -->
+          <div id="quizPlayView" style="display: none;">
+            <div class="quiz-hud-bar">
+              <span id="quizProgressHud">第 1 / 10 問</span>
+              <span id="quizTimerHud" style="color: var(--primary);">📝 じっくりモード</span>
+              <span id="quizScoreHud" style="color: var(--break-color);">正解: 0 ｜ コンボ: 0</span>
+            </div>
+
+            <div class="quiz-question-card">
+              <div style="font-size: 0.74rem; font-weight: 800; color: var(--sub-text); margin-bottom: 6px;">次の意味・答えとして正しいものを選択</div>
+              <div class="quiz-question-text" id="quizQuestionText">問題文</div>
+            </div>
+
+            <div class="quiz-choices-grid" id="quizChoicesGrid"></div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+              <button type="button" class="btn btn-secondary" style="flex: 0 0 auto; padding: 10px 14px; font-size: 0.84rem;" data-action="abort-quiz">✕ 中断する</button>
+              <button type="button" class="btn btn-primary" id="quizNextBtn" style="flex: 1; display: none;" data-action="next-quiz-question">次の問題へ ➔</button>
+            </div>
+          </div>
+
+          <!-- 3. 結果発表画面 -->
+          <div class="quiz-result-card" id="quizResultView" style="display: none;">
+            <div style="font-size: 2.4rem;" id="quizResultEmoji">🏆</div>
+            <h3 style="font-weight: 800; font-size: 1.25rem;" id="quizResultTitle">テスト完了！</h3>
+            <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);" id="quizResultScoreText">10問中 8問正解！</div>
+            <p style="font-size: 0.84rem; color: var(--sub-text);" id="quizResultSubText"></p>
+
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 6px;">
+              <button type="button" class="btn btn-secondary" id="sendWrongQuizToWeaknessBtn" style="flex: 0 0 auto; color: var(--accent); border-color: var(--accent); display: none;" data-action="send-wrong-quiz-to-weakness">
+                📌 間違えた問題を弱点ノートへ一括送信
+              </button>
+              <button type="button" class="btn btn-primary" style="flex: 0 0 auto;" data-action="reset-quiz-to-setup">🔄 もう一度挑戦する</button>
             </div>
           </div>
         </div>
@@ -2450,19 +2707,18 @@
           <span class="active-subject-pill" style="border-color: var(--primary); color: var(--primary); background: var(--primary-light);">全機能完全対応</span>
         </div>
 
-        <!-- ③ ページ内ジャンプ目次チップ -->
+        <!-- ページ内ジャンプ目次チップ -->
         <div class="help-toc-bar" aria-label="ヘルプ目次">
           <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-quickstart">🚀 3ステップ基本の流れ</button>
           <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-timer">⏱ 計測・タスク・環境音</button>
-          <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-lab">🧠 暗記・弱点ラボ</button>
-          <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-ai">✨ AI自動計画 & 目標・分析</button>
+          <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-lab">🧠 暗記・ミニテスト・弱点ラボ</button>
+          <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-ai">✨ AI自動計画 & 目標・着せ替え</button>
           <button type="button" class="help-toc-chip" data-action="scroll-help-section" data-section="help-sec-backup">💾 データ保存・復元</button>
         </div>
 
-        <!-- ① 3ステップ クイックスタート図解（SVG） -->
+        <!-- 3ステップ クイックスタート図解（SVG） -->
         <div class="help-category-title" id="help-sec-quickstart" style="margin-top: 8px;">🚀 まずはこれだけ！3ステップ基本の流れ</div>
         <div class="quickstart-grid">
-          <!-- STEP 1 -->
           <div class="quickstart-card">
             <span class="quickstart-step-badge">STEP 1</span>
             <div class="quickstart-svg-box">
@@ -2484,7 +2740,6 @@
             <p>勉強する教科タブを選び、タスクをタップして「集中対象」にセットします。</p>
           </div>
 
-          <!-- STEP 2 -->
           <div class="quickstart-card">
             <span class="quickstart-step-badge">STEP 2</span>
             <div class="quickstart-svg-box">
@@ -2502,7 +2757,6 @@
             <p>スタートを押すと計測開始！環境音も自動再生され、終了後に学習時間が自動記録されます。</p>
           </div>
 
-          <!-- STEP 3 -->
           <div class="quickstart-card">
             <span class="quickstart-step-badge">STEP 3</span>
             <div class="quickstart-svg-box">
@@ -2513,20 +2767,18 @@
                 <line x1="8" y1="80" x2="72" y2="80" stroke="var(--card-border)" stroke-width="1.5" />
                 <rect x="86" y="14" width="84" height="66" rx="12" fill="var(--input-bg)" stroke="var(--primary)" stroke-width="1.5" />
                 <rect x="94" y="22" width="38" height="12" rx="6" fill="var(--primary-light)" />
-                <text x="113" y="30" text-anchor="middle" fill="var(--primary)" font-size="7" font-weight="800">暗記カード</text>
+                <text x="113" y="30" text-anchor="middle" fill="var(--primary)" font-size="7" font-weight="800">4択テスト</text>
                 <text x="128" y="52" text-anchor="middle" fill="var(--text)" font-size="9.5" font-weight="800">問題 ⇄ 答え</text>
                 <text x="128" y="68" text-anchor="middle" fill="var(--accent)" font-size="7.5" font-weight="700">📌 弱点ストック</text>
               </svg>
             </div>
-            <h4>3. グラフ分析 & 弱点復習</h4>
-            <p>「きろく」で頑張りを可視化し、「暗記・弱点ラボ」で苦手な問題だけを重点復習します。</p>
+            <h4>3. 分析・4択テスト & 弱点復習</h4>
+            <p>「きろく」で頑張りを可視化し、「暗記・弱点ラボ」の4択クイズや弱点ノートで復習します。</p>
           </div>
         </div>
 
-        <!-- ② テーマ連動のミニUIモックイラスト付き機能ガイド -->
         <div class="help-category-title" id="help-sec-timer">⏱ 計測・タスク管理・環境音ミキサー</div>
         <div class="help-feature-grid">
-          <!-- 1. タイマー＆ストップウォッチ -->
           <div class="help-feature-card">
             <div class="help-mock-illustration">
               <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
@@ -2545,7 +2797,6 @@
             </div>
           </div>
 
-          <!-- 2. タスクごとの時間紐付け -->
           <div class="help-feature-card">
             <div class="help-mock-illustration">
               <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
@@ -2566,7 +2817,6 @@
             </div>
           </div>
 
-          <!-- 3. 集中サウンド＆環境音ミキサー -->
           <div class="help-feature-card">
             <div class="help-mock-illustration">
               <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
@@ -2587,9 +2837,8 @@
           </div>
         </div>
 
-        <div class="help-category-title" id="help-sec-lab">🧠 暗記・弱点ラボ（フラッシュカード & 弱点ノート）</div>
+        <div class="help-category-title" id="help-sec-lab">🧠 暗記・ミニテスト・弱点ラボ</div>
         <div class="help-feature-grid">
-          <!-- 4. 自由フォルダ & 忘却曲線カード -->
           <div class="help-feature-card">
             <div class="help-mock-illustration">
               <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
@@ -2614,7 +2863,25 @@
             </div>
           </div>
 
-          <!-- 5. 間違い直し・弱点ノート -->
+          <div class="help-feature-card">
+            <div class="help-mock-illustration">
+              <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
+                <rect x="12" y="8" width="136" height="24" rx="8" fill="var(--primary-light)" stroke="var(--primary)" stroke-width="1.5" />
+                <text x="80" y="23" text-anchor="middle" fill="var(--primary)" font-size="8.5" font-weight="800">🎮 4択クイズ & ⚡ 60秒TA</text>
+                <rect x="12" y="38" width="65" height="22" rx="7" fill="var(--break-light)" stroke="var(--break-color)" stroke-width="1.5" />
+                <text x="44" y="52" text-anchor="middle" fill="var(--break-color)" font-size="7.5" font-weight="800">A. 正解！</text>
+                <rect x="83" y="38" width="65" height="22" rx="7" fill="var(--input-bg)" stroke="var(--card-border)" />
+                <text x="115" y="52" text-anchor="middle" fill="var(--sub-text)" font-size="7.5" font-weight="700">B. 選択肢</text>
+                <rect x="12" y="66" width="136" height="20" rx="10" fill="var(--primary)" />
+                <text x="80" y="79" text-anchor="middle" fill="var(--primary-text)" font-size="7.5" font-weight="800">📌 誤答を弱点ノートへ一括送信</text>
+              </svg>
+            </div>
+            <div class="help-content">
+              <h4>5. 暗記カード・ミニテストモード（4択クイズ＆タイムアタック）</h4>
+              <p>登録済みの忘却曲線カードから自動で4択問題を生成します。じっくり10問解く「4択クイズ」と、60秒で連続正解数を競う「タイムアタック」の2種類でゲーム感覚で暗記チェックができ、間違えた問題はワンタップで弱点ノートへ送れます。</p>
+            </div>
+          </div>
+
           <div class="help-feature-card">
             <div class="help-mock-illustration">
               <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
@@ -2630,15 +2897,14 @@
               </svg>
             </div>
             <div class="help-content">
-              <h4>5. 間違い直し・弱点ノート（0文字タップ登録 & カード転送）</h4>
-              <p>フォルダと「ワンタップ対策チップ」を選ぶだけで、キーボード入力なしでも素早く弱点をストックできます。また、フラッシュカード画面の<strong>「📌 弱点ノートへ送る」</strong>ボタンから苦手な問題をワンタップで転送することも可能です。</p>
+              <h4>6. 間違い直し・弱点ノート（0文字タップ登録 & カード転送）</h4>
+              <p>フォルダと「ワンタップ対策チップ」を選ぶだけで、キーボード入力なしでも素早く弱点をストックできます。フラッシュカード画面の<strong>「📌 弱点ノートへ送る」</strong>ボタンからも転送可能です。</p>
             </div>
           </div>
         </div>
 
-        <div class="help-category-title" id="help-sec-ai">✨ AI自動計画・目標・記録分析・着せ替え</div>
+        <div class="help-category-title" id="help-sec-ai">✨ AI自動計画・目標・記録分析・オリジナル着せ替え</div>
         <div class="help-feature-grid">
-          <!-- 6. AI自動計画 -->
           <div class="help-feature-card">
             <div class="help-mock-illustration">
               <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
@@ -2655,39 +2921,37 @@
               </svg>
             </div>
             <div class="help-content">
-              <h4>6. 「今日なにやる？」ワンタップ自動計画AI</h4>
+              <h4>7. 「今日なにやる？」ワンタップ自動計画AI</h4>
               <p>ヘッダーの「✨ AI自動計画」から空き時間（30分〜3時間）を選ぶと、遅れている教科と未完了タスクを分析して最適なセットメニューを自動生成します。ステップをタップするとタイマーへ即セットされます。</p>
             </div>
           </div>
 
-          <!-- 7. 目標・きろく・テーマ着せ替え -->
           <div class="help-feature-card">
             <div class="help-mock-illustration">
               <svg width="160" height="96" viewBox="0 0 160 96" fill="none">
                 <rect x="14" y="12" width="132" height="12" rx="6" fill="var(--ring-bg)" />
                 <rect x="14" y="12" width="88" height="12" rx="6" fill="var(--primary)" />
                 <text x="80" y="38" text-anchor="middle" fill="var(--primary)" font-size="8.5" font-weight="800">🎯 達成率 67% ・ 1日 1.5h</text>
-                <circle cx="38" cy="68" r="10" fill="#4f46e5" />
-                <circle cx="66" cy="68" r="10" fill="#06b6d4" />
-                <circle cx="94" cy="68" r="10" fill="#2d6a4f" />
-                <circle cx="122" cy="68" r="10" fill="#18181b" />
+                <circle cx="32" cy="68" r="10" fill="#4f46e5" />
+                <circle cx="56" cy="68" r="10" fill="#06b6d4" />
+                <circle cx="80" cy="68" r="10" fill="#2d6a4f" />
+                <circle cx="104" cy="68" r="10" fill="#18181b" />
+                <circle cx="128" cy="68" r="10" fill="var(--accent)" />
               </svg>
             </div>
             <div class="help-content">
-              <h4>7. 目標設定・勉強時間のきろく & 5種類のテーマ着せ替え</h4>
-              <p>・<strong>🎯 目標設定</strong>：テスト日と合計目標時間から1日あたりの必要ペースを自動算出します。<br>
-              ・<strong>📊 勉強時間のきろく</strong>：円グラフ・週間グラフの確認に加え、各教科の「✏️ 修正」から手動調整も可能です。<br>
-              ・<strong>🎨 テーマ変更</strong>：標準／サイバー／ボタニカル／モノクロ／ダークの5種類を切り替えられます。</p>
+              <h4>8. 目標設定・勉強時間のきろく & オリジナル着せ替えメーカー</h4>
+              <p>・<strong>🎯 目標設定 & 📊 きろく</strong>：必要ペースの自動計算や円グラフ・週間グラフ分析、記録の手動修正ができます。<br>
+              ・<strong>🎨 オリジナル着せ替えメーカー</strong>：5種類のプリセットテーマに加え、背景色・カード色・ボタン色・アクセント色をカラーピッカーで自由に組み合わせて自分だけのテーマを作成できます。</p>
             </div>
           </div>
         </div>
 
-        <!-- ③ データのバックアップ・復元ボックス -->
         <div class="help-category-title" id="help-sec-backup">💾 データのバックアップ・復元</div>
         <div class="backup-box">
           <strong style="font-size: 0.96rem;">💾 JSONファイルで全データを安全に保存・復元</strong>
           <p style="font-size: 0.82rem; color: var(--sub-text); line-height: 1.5;">
-            学習時間・Todo・暗記カード・弱点ノート・カスタムフォルダ・目標設定を1つのJSONファイルに書き出せます。機種変更やブラウザ履歴消去前のバックアップにご活用ください。
+            学習時間・Todo・暗記カード・弱点ノート・カスタムフォルダ・オリジナルテーマ・目標設定を1つのJSONファイルに書き出せます。
           </p>
           <div class="backup-actions">
             <button type="button" class="btn btn-primary" style="flex: 0 0 auto; padding: 11px 18px; font-size: 0.88rem;" data-action="export-data">📥 データをファイルに保存</button>
@@ -2776,13 +3040,13 @@
     </div>
   </div>
 
-  <!-- 🎨 着せ替えテーマ・セレクター モーダル -->
+  <!-- 🎨 着せ替えテーマ・セレクター ＆ オリジナル着せ替えメーカー モーダル -->
   <div class="modal-overlay" id="themeModal" data-action="close-modal-overlay" data-modal-id="themeModal">
-    <div class="modal-card" style="max-width: 480px;">
+    <div class="modal-card" style="max-width: 500px;">
       <button type="button" class="modal-close" data-action="close-modal" data-modal-id="themeModal" aria-label="閉じる">✕</button>
-      <h2 style="font-weight: 800;">🎨 アプリのテーマを着せ替える</h2>
+      <h2 style="font-weight: 800;">🎨 テーマ着せ替え & オリジナル作成</h2>
       <p style="font-size: 0.83rem; color: var(--sub-text); margin-top: 4px;">
-        気分や勉強する時間帯に合わせて、画面の雰囲気をワンタップで切り替えられます。
+        5種類のプリセットテーマから選ぶか、下のメーカーで自分好みの色にカスタマイズできます。
       </p>
 
       <div class="theme-selector-grid" id="themeSelectorGrid">
@@ -2844,6 +3108,47 @@
             <span class="theme-swatch-dot" style="background:#6366f1"></span>
             <span class="theme-swatch-dot" style="background:#fbbf24"></span>
           </div>
+        </button>
+
+        <button type="button" class="theme-option-card" data-action="select-theme" data-theme-id="custom" id="customThemeOptionCard">
+          <div class="theme-option-info">
+            <span class="theme-option-title">🖌️ マイ・オリジナルテーマ</span>
+            <span class="theme-option-desc">下のカラーピッカーで作った自分だけのカスタム配色</span>
+          </div>
+          <div class="theme-swatches">
+            <span class="theme-swatch-dot" id="customSwatchBg" style="background:#fdf2f8"></span>
+            <span class="theme-swatch-dot" id="customSwatchCard" style="background:#ffffff"></span>
+            <span class="theme-swatch-dot" id="customSwatchPrimary" style="background:#db2777"></span>
+          </div>
+        </button>
+      </div>
+
+      <!-- 🎨 オリジナル着せ替えメーカー -->
+      <div class="custom-theme-maker">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="font-size: 0.9rem;">🖌️ オリジナル着せ替えメーカー</strong>
+          <span style="font-size: 0.74rem; color: var(--sub-text);">色を選ぶと即プレビュー反映</span>
+        </div>
+        <div class="custom-color-grid">
+          <label class="color-picker-item">
+            <span>🖼️ 背景色</span>
+            <input type="color" id="customColorBg" value="#fdf2f8">
+          </label>
+          <label class="color-picker-item">
+            <span>🃏 カード色</span>
+            <input type="color" id="customColorCard" value="#ffffff">
+          </label>
+          <label class="color-picker-item">
+            <span>🔘 ボタン・メイン色</span>
+            <input type="color" id="customColorPrimary" value="#db2777">
+          </label>
+          <label class="color-picker-item">
+            <span>✨ アクセント色</span>
+            <input type="color" id="customColorAccent" value="#f59e0b">
+          </label>
+        </div>
+        <button type="button" class="btn btn-primary" style="padding: 10px 14px; font-size: 0.88rem;" data-action="apply-custom-maker">
+          ✨ このオリジナル配色を適用して保存
         </button>
       </div>
     </div>
@@ -2969,7 +3274,8 @@
         cyber:      { label: '🌌 サイバー',   isDark: true,  chartBar: '#06b6d4' },
         botanical:  { label: '🌿 ボタニカル', isDark: false, chartBar: '#2d6a4f' },
         monochrome: { label: '⬛ モノクロ',   isDark: false, chartBar: '#18181b' },
-        dark:       { label: '🌙 ダーク',     isDark: true,  chartBar: '#6366f1' }
+        dark:       { label: '🌙 ダーク',     isDark: true,  chartBar: '#6366f1' },
+        custom:     { label: '🖌️ オリジナル', isDark: false, chartBar: '#db2777' }
       };
 
       const SUBJECT_CONFIG = {
@@ -2990,6 +3296,12 @@
         selectedTaskIndex: null,
         savedGoal: null,
         theme: 'standard',
+        customThemeColors: {
+          bg: '#fdf2f8',
+          card: '#ffffff',
+          primary: '#db2777',
+          accent: '#f59e0b'
+        },
         editingSubject: null,
 
         // 第3機能：暗記カード & 弱点ノート & 自由フォルダ
@@ -3005,6 +3317,21 @@
         selectedCardIdsForDelete: new Set(),
         confirmDeleteAllArmed: false,
         confirmDeleteAllTimer: null,
+
+        // 🎮 ミニテストモード状態
+        quizHighScore: 0,
+        quizState: {
+          active: false,
+          mode: 'standard',
+          questions: [],
+          currentIndex: 0,
+          score: 0,
+          combo: 0,
+          answered: false,
+          timeLeft: 60,
+          timerId: null,
+          wrongCards: []
+        },
 
         // Web Audio API 環境音ミキサー状態
         soundPreset: 'none',
@@ -3060,14 +3387,91 @@
         toast: document.getElementById('toast')
       };
 
+      // --- 色の明度判定・HEX→RGBA変換ユーティリティ（オリジナルテーマ用） ---
+      function hexToRgb(hex) {
+        const clean = hex.replace('#', '');
+        const num = parseInt(clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean, 16);
+        return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+      }
+
+      function isColorDark(hex) {
+        const { r, g, b } = hexToRgb(hex);
+        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return luminance < 0.5;
+      }
+
+      function rgbaFromHex(hex, alpha) {
+        const { r, g, b } = hexToRgb(hex);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      }
+
+      function clearCustomCssVars() {
+        const rootStyle = document.documentElement.style;
+        ['--bg', '--bg-image', '--card-bg', '--card-border', '--text', '--sub-text',
+         '--primary', '--primary-hover', '--primary-text', '--primary-light',
+         '--accent', '--input-bg', '--input-border', '--ring-bg'].forEach(prop => {
+          rootStyle.removeProperty(prop);
+        });
+      }
+
+      function applyCustomCssVars(colors) {
+        const rootStyle = document.documentElement.style;
+        const cardDark = isColorDark(colors.card);
+        const primaryDark = isColorDark(colors.primary);
+
+        rootStyle.setProperty('--bg', colors.bg);
+        rootStyle.setProperty('--bg-image', 'none');
+        rootStyle.setProperty('--card-bg', colors.card);
+        rootStyle.setProperty('--card-border', rgbaFromHex(colors.primary, 0.35));
+        rootStyle.setProperty('--text', cardDark ? '#f8fafc' : '#0f172a');
+        rootStyle.setProperty('--sub-text', cardDark ? '#94a3b8' : '#475569');
+        rootStyle.setProperty('--primary', colors.primary);
+        rootStyle.setProperty('--primary-hover', colors.primary);
+        rootStyle.setProperty('--primary-text', primaryDark ? '#ffffff' : '#0f172a');
+        rootStyle.setProperty('--primary-light', rgbaFromHex(colors.primary, 0.15));
+        rootStyle.setProperty('--accent', colors.accent);
+        rootStyle.setProperty('--input-bg', cardDark ? 'rgba(255,255,255,0.06)' : rgbaFromHex(colors.bg, 0.55));
+        rootStyle.setProperty('--input-border', rgbaFromHex(colors.primary, 0.3));
+        rootStyle.setProperty('--ring-bg', cardDark ? '#334155' : '#cbd5e1');
+
+        THEME_META.custom.isDark = cardDark;
+        THEME_META.custom.chartBar = colors.primary;
+      }
+
+      function syncCustomMakerUI() {
+        const c = state.customThemeColors;
+        const bgEl = document.getElementById('customColorBg');
+        const cardEl = document.getElementById('customColorCard');
+        const priEl = document.getElementById('customColorPrimary');
+        const accEl = document.getElementById('customColorAccent');
+        if (bgEl) bgEl.value = c.bg;
+        if (cardEl) cardEl.value = c.card;
+        if (priEl) priEl.value = c.primary;
+        if (accEl) accEl.value = c.accent;
+
+        const swBg = document.getElementById('customSwatchBg');
+        const swCard = document.getElementById('customSwatchCard');
+        const swPri = document.getElementById('customSwatchPrimary');
+        if (swBg) swBg.style.background = c.bg;
+        if (swCard) swCard.style.background = c.card;
+        if (swPri) swPri.style.background = c.primary;
+      }
+
       // --- テーマ適用＆着せ替え処理 ---
       function applyTheme(themeId, silent = false) {
         const validId = THEME_META[themeId] ? themeId : 'standard';
         state.theme = validId;
-        if (validId === 'standard') {
-          document.documentElement.removeAttribute('data-theme');
+
+        if (validId === 'custom') {
+          document.documentElement.setAttribute('data-theme', 'custom');
+          applyCustomCssVars(state.customThemeColors);
         } else {
-          document.documentElement.setAttribute('data-theme', validId);
+          clearCustomCssVars();
+          if (validId === 'standard') {
+            document.documentElement.removeAttribute('data-theme');
+          } else {
+            document.documentElement.setAttribute('data-theme', validId);
+          }
         }
 
         const meta = THEME_META[validId];
@@ -3080,6 +3484,7 @@
           card.classList.toggle('active', card.dataset.themeId === validId);
         });
 
+        syncCustomMakerUI();
         saveState();
         updateAllCharts();
         if (!silent) {
@@ -3270,6 +3675,7 @@
             weaknesses: state.weaknesses,
             customTopics: state.customTopics,
             lastUsedUnits: state.lastUsedUnits,
+            quizHighScore: state.quizHighScore,
             soundSettings: {
               preset: state.soundPreset,
               volume: state.soundVolume,
@@ -3277,6 +3683,7 @@
             },
             savedGoal: state.savedGoal,
             theme: state.theme,
+            customThemeColors: state.customThemeColors,
             timerState: {
               activeMode: state.activeMode,
               studyMinutes: state.studyMinutes,
@@ -3307,6 +3714,8 @@
           if (parsed.weaknesses) Object.assign(state.weaknesses, parsed.weaknesses);
           if (parsed.customTopics) Object.assign(state.customTopics, parsed.customTopics);
           if (parsed.lastUsedUnits) Object.assign(state.lastUsedUnits, parsed.lastUsedUnits);
+          if (typeof parsed.quizHighScore === 'number') state.quizHighScore = parsed.quizHighScore;
+          if (parsed.customThemeColors) Object.assign(state.customThemeColors, parsed.customThemeColors);
           if (parsed.soundSettings) {
             state.soundPreset = parsed.soundSettings.preset || 'none';
             state.soundVolume = typeof parsed.soundSettings.volume === 'number' ? parsed.soundSettings.volume : 0.4;
@@ -3338,8 +3747,10 @@
           flashcards: state.flashcards,
           weaknesses: state.weaknesses,
           customTopics: state.customTopics,
+          quizHighScore: state.quizHighScore,
           savedGoal: state.savedGoal,
-          theme: state.theme
+          theme: state.theme,
+          customThemeColors: state.customThemeColors
         };
         const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
@@ -3364,6 +3775,8 @@
             if (imported.flashcards) Object.assign(state.flashcards, imported.flashcards);
             if (imported.weaknesses) Object.assign(state.weaknesses, imported.weaknesses);
             if (imported.customTopics) Object.assign(state.customTopics, imported.customTopics);
+            if (typeof imported.quizHighScore === 'number') state.quizHighScore = imported.quizHighScore;
+            if (imported.customThemeColors) Object.assign(state.customThemeColors, imported.customThemeColors);
             if (imported.theme && THEME_META[imported.theme]) {
               applyTheme(imported.theme, true);
             }
@@ -3423,6 +3836,9 @@
 
         const addTopicLabel = document.getElementById('addTopicSubjectLabel');
         if (addTopicLabel) addTopicLabel.textContent = sub;
+
+        const quizScopeLabel = document.getElementById('quizScopeLabel');
+        if (quizScopeLabel) quizScopeLabel.textContent = `${sub}${topicSuffix}`;
       }
 
       function updateRecordTargetNote() {
@@ -3452,6 +3868,7 @@
 
       function selectSubject(subject, keepTaskIndex = false) {
         if (!SUBJECT_CONFIG[subject]) return;
+        abortQuizSilently();
         state.currentSubject = subject;
         state.selectedLabTopic = 'すべて';
         if (!keepTaskIndex) {
@@ -3591,7 +4008,7 @@
         if (syncCheck) syncCheck.checked = state.soundSyncWithTimer;
       }
 
-      // --- 🧠 忘却曲線フラッシュカード & ❌ 弱点ノート & 自由フォルダロジック ---
+      // --- 🧠 忘却曲線フラッシュカード & 🎮 ミニテスト & ❌ 弱点ノート ロジック ---
       function getFilteredFlashcards(subject) {
         const allCards = state.flashcards[subject] || [];
         if (state.selectedLabTopic === 'すべて') return allCards;
@@ -3681,6 +4098,268 @@
         return pool[0];
       }
 
+      // --- 🎮 ミニテストモード（4択クイズ＆タイムアタック）実装 ---
+      function abortQuizSilently() {
+        clearInterval(state.quizState.timerId);
+        state.quizState.active = false;
+        state.quizState.timerId = null;
+      }
+
+      function buildQuizQuestions(subject, mode) {
+        const filtered = getFilteredFlashcards(subject);
+        if (filtered.length < 2) return null;
+
+        // 全教科からダミー選択肢プールを確保（カードが2〜3枚でも4択が成立するように補完）
+        const globalBacks = [];
+        SUBJECT_NAMES.forEach(s => {
+          (state.flashcards[s] || []).forEach(c => {
+            if (c.back && !globalBacks.includes(c.back)) globalBacks.push(c.back);
+          });
+        });
+        const fallbackDummies = ['（該当なし）', '（別の用語）', '（定義が異なる）', '（条件が不十分）'];
+
+        // 苦手度が高いカードほど上位に来やすいよう重み付きシャッフル
+        const weightedPool = [...filtered]
+          .map(c => ({ card: c, sortKey: Math.random() / Math.max(1, c.weight || 3) }))
+          .sort((a, b) => a.sortKey - b.sortKey)
+          .map(item => item.card);
+
+        const targetCards = mode === 'standard' ? weightedPool.slice(0, 10) : weightedPool;
+
+        return targetCards.map(card => {
+          const distractors = [];
+          const candidateBacks = globalBacks.filter(b => b !== card.back).sort(() => Math.random() - 0.5);
+          for (const b of candidateBacks) {
+            if (distractors.length >= 3) break;
+            distractors.push(b);
+          }
+          for (const fb of fallbackDummies) {
+            if (distractors.length >= 3) break;
+            if (fb !== card.back && !distractors.includes(fb)) distractors.push(fb);
+          }
+
+          const options = [
+            { text: card.back, isCorrect: true },
+            ...distractors.map(d => ({ text: d, isCorrect: false }))
+          ].sort(() => Math.random() - 0.5);
+
+          return { card, options };
+        });
+      }
+
+      function startMiniQuiz(mode) {
+        const sub = state.currentSubject;
+        const questions = buildQuizQuestions(sub, mode);
+        if (!questions) {
+          showToast('⚠️ 4択テストを始めるには最低2枚以上の暗記カードが必要です');
+          return;
+        }
+
+        abortQuizSilently();
+        state.quizState = {
+          active: true,
+          mode,
+          questions,
+          currentIndex: 0,
+          score: 0,
+          combo: 0,
+          answered: false,
+          timeLeft: 60,
+          timerId: null,
+          wrongCards: []
+        };
+
+        document.getElementById('quizSetupView').style.display = 'none';
+        document.getElementById('quizResultView').style.display = 'none';
+        document.getElementById('quizPlayView').style.display = 'block';
+
+        if (mode === 'timeattack') {
+          state.quizState.timerId = setInterval(() => {
+            state.quizState.timeLeft--;
+            updateQuizHud();
+            if (state.quizState.timeLeft <= 0) {
+              finishMiniQuiz(true);
+            }
+          }, 1000);
+        }
+
+        renderCurrentQuizQuestion();
+      }
+
+      function updateQuizHud() {
+        const qs = state.quizState;
+        const progEl = document.getElementById('quizProgressHud');
+        const timerEl = document.getElementById('quizTimerHud');
+        const scoreEl = document.getElementById('quizScoreHud');
+
+        if (qs.mode === 'standard') {
+          progEl.textContent = `第 ${qs.currentIndex + 1} / ${qs.questions.length} 問`;
+          timerEl.textContent = '📝 じっくり4択';
+          timerEl.style.color = 'var(--primary)';
+        } else {
+          progEl.textContent = `第 ${qs.currentIndex + 1} 問目`;
+          timerEl.textContent = `⚡ 残り ${qs.timeLeft}秒`;
+          timerEl.style.color = qs.timeLeft <= 10 ? 'var(--danger)' : 'var(--accent)';
+        }
+        scoreEl.textContent = `正解: ${qs.score} ｜ ${qs.combo}連続`;
+      }
+
+      function renderCurrentQuizQuestion() {
+        const qs = state.quizState;
+        if (!qs.active) return;
+
+        if (qs.currentIndex >= qs.questions.length) {
+          if (qs.mode === 'timeattack') {
+            // タイムアタックは時間切れまで問題を追加補充してループ
+            const more = buildQuizQuestions(state.currentSubject, 'timeattack');
+            if (more) {
+              qs.questions.push(...more);
+            } else {
+              finishMiniQuiz(false);
+              return;
+            }
+          } else {
+            finishMiniQuiz(false);
+            return;
+          }
+        }
+
+        qs.answered = false;
+        updateQuizHud();
+
+        const currentQ = qs.questions[qs.currentIndex];
+        document.getElementById('quizQuestionText').textContent = currentQ.card.front;
+
+        const labels = ['A', 'B', 'C', 'D'];
+        document.getElementById('quizChoicesGrid').innerHTML = currentQ.options.map((opt, idx) => `
+          <button type="button" class="quiz-choice-btn" data-action="answer-quiz" data-choice-index="${idx}">
+            <span class="quiz-choice-badge">${labels[idx]}</span>
+            <span>${escapeHtml(opt.text)}</span>
+          </button>
+        `).join('');
+
+        const nextBtn = document.getElementById('quizNextBtn');
+        nextBtn.style.display = 'none';
+        nextBtn.textContent = (qs.mode === 'standard' && qs.currentIndex === qs.questions.length - 1)
+          ? '結果を見る 🏆'
+          : '次の問題へ ➔';
+      }
+
+      function handleQuizAnswer(choiceIdx) {
+        const qs = state.quizState;
+        if (!qs.active || qs.answered) return;
+        qs.answered = true;
+
+        const currentQ = qs.questions[qs.currentIndex];
+        const chosen = currentQ.options[choiceIdx];
+        const buttons = document.querySelectorAll('#quizChoicesGrid .quiz-choice-btn');
+
+        buttons.forEach((btn, idx) => {
+          btn.disabled = true;
+          if (currentQ.options[idx].isCorrect) {
+            btn.classList.add('correct');
+          } else if (idx === choiceIdx) {
+            btn.classList.add('wrong');
+          }
+        });
+
+        if (chosen && chosen.isCorrect) {
+          qs.score++;
+          qs.combo++;
+          currentQ.card.weight = Math.max(1, (currentQ.card.weight || 3) - 1);
+          currentQ.card.level = (currentQ.card.level || 0) + 1;
+        } else {
+          qs.combo = 0;
+          currentQ.card.weight = Math.min(10, (currentQ.card.weight || 3) + 2);
+          currentQ.card.level = 0;
+          if (!qs.wrongCards.some(c => c.id === currentQ.card.id)) {
+            qs.wrongCards.push(currentQ.card);
+          }
+        }
+
+        saveState();
+        updateQuizHud();
+
+        if (qs.mode === 'timeattack') {
+          setTimeout(() => {
+            if (qs.active) {
+              qs.currentIndex++;
+              renderCurrentQuizQuestion();
+            }
+          }, 550);
+        } else {
+          document.getElementById('quizNextBtn').style.display = 'inline-flex';
+        }
+      }
+
+      function finishMiniQuiz(isTimeUp) {
+        const qs = state.quizState;
+        clearInterval(qs.timerId);
+        qs.active = false;
+
+        document.getElementById('quizPlayView').style.display = 'none';
+        document.getElementById('quizResultView').style.display = 'block';
+
+        const emojiEl = document.getElementById('quizResultEmoji');
+        const titleEl = document.getElementById('quizResultTitle');
+        const scoreEl = document.getElementById('quizResultScoreText');
+        const subEl = document.getElementById('quizResultSubText');
+        const sendWrongBtn = document.getElementById('sendWrongQuizToWeaknessBtn');
+
+        if (qs.mode === 'timeattack') {
+          const isNewRecord = qs.score > state.quizHighScore;
+          if (isNewRecord) {
+            state.quizHighScore = qs.score;
+            saveState();
+          }
+          emojiEl.textContent = isNewRecord ? '🎉' : '⚡';
+          titleEl.textContent = isTimeUp ? 'TIME UP！60秒タイムアタック結果' : 'タイムアタック終了！';
+          scoreEl.textContent = `記録：${qs.score} 問正解！`;
+          subEl.textContent = isNewRecord
+            ? `🏆 自己ベスト更新！（これまでの記録を塗り替えました）`
+            : `現在のハイスコア: ${state.quizHighScore}問`;
+        } else {
+          const total = qs.questions.length;
+          const rate = Math.round((qs.score / total) * 100);
+          emojiEl.textContent = rate === 100 ? '👑' : rate >= 70 ? '🎉' : '💪';
+          titleEl.textContent = rate === 100 ? 'パーフェクト達成！' : '4択ミニテスト完了！';
+          scoreEl.textContent = `${total}問中 ${qs.score}問正解（正答率 ${rate}%）`;
+          subEl.textContent = qs.wrongCards.length > 0
+            ? `間違えた ${qs.wrongCards.length}問の優先度を自動で引き上げました。`
+            : '全問正解です！記憶がしっかり定着しています。';
+        }
+
+        if (qs.wrongCards.length > 0) {
+          sendWrongBtn.style.display = 'inline-flex';
+          sendWrongBtn.textContent = `📌 間違えた${qs.wrongCards.length}問を弱点ノートへ一括送信`;
+        } else {
+          sendWrongBtn.style.display = 'none';
+        }
+      }
+
+      function sendWrongQuizCardsToWeakness() {
+        const sub = state.currentSubject;
+        const wrongList = state.quizState.wrongCards || [];
+        if (wrongList.length === 0) return;
+
+        wrongList.forEach(card => {
+          state.weaknesses[sub].unshift({
+            topic: card.topic || (state.selectedLabTopic !== 'すべて' ? state.selectedLabTopic : ''),
+            unit: card.front,
+            cause: '原因：公式・知識不足',
+            solution: `4択テスト誤答 ／ 正解：${card.back}`,
+            resolved: false
+          });
+        });
+
+        const count = wrongList.length;
+        state.quizState.wrongCards = [];
+        document.getElementById('sendWrongQuizToWeaknessBtn').style.display = 'none';
+        saveState();
+        renderLabView();
+        showToast(`📌 間違えた${count}問を弱点ノートへ登録しました！`);
+      }
+
       function renderLabView() {
         const sub = state.currentSubject;
         renderLabTopicBar();
@@ -3703,9 +4382,26 @@
         document.getElementById('labWidgetWeakness').textContent = `${unresolvedWeakCount}件`;
 
         document.getElementById('subtabCards').classList.toggle('active', state.labActiveTab === 'cards');
+        document.getElementById('subtabQuiz').classList.toggle('active', state.labActiveTab === 'quiz');
         document.getElementById('subtabWeakness').classList.toggle('active', state.labActiveTab === 'weakness');
+
         document.getElementById('labPanelCards').style.display = state.labActiveTab === 'cards' ? 'block' : 'none';
+        document.getElementById('labPanelQuiz').style.display = state.labActiveTab === 'quiz' ? 'block' : 'none';
         document.getElementById('labPanelWeakness').style.display = state.labActiveTab === 'weakness' ? 'block' : 'none';
+
+        // ミニテスト待機画面の表示更新
+        const highBadge = document.getElementById('quizHighScoreBadge');
+        if (highBadge) highBadge.textContent = `ハイスコア: ${state.quizHighScore}問`;
+        const countHint = document.getElementById('quizCardCountHint');
+        if (countHint) {
+          countHint.textContent = cards.length >= 2
+            ? `対象カード ${cards.length}枚 から4択問題を自動生成します（間違えた問題は優先度UP！）`
+            : `※テストを始めるには、まず「忘却曲線カード」で2枚以上カードを登録してください（現在 ${cards.length}枚）`;
+        }
+        if (!state.quizState.active && document.getElementById('quizResultView').style.display !== 'block') {
+          document.getElementById('quizSetupView').style.display = 'flex';
+          document.getElementById('quizPlayView').style.display = 'none';
+        }
 
         const lastUnitBtn = document.getElementById('lastUsedUnitBtn');
         const savedUnit = state.lastUsedUnits[sub] || '';
@@ -4924,6 +5620,9 @@
       }
 
       function navigateTo(pageId) {
+        if (pageId !== 'page-lab') {
+          abortQuizSilently();
+        }
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         const target = document.getElementById(pageId);
         if (target) target.classList.add('active');
@@ -4958,10 +5657,21 @@
               break;
             }
             case 'open-theme-modal':
+              syncCustomMakerUI();
               openModal('themeModal');
               break;
             case 'select-theme':
               applyTheme(actionEl.dataset.themeId, false);
+              closeModal('themeModal');
+              break;
+            case 'apply-custom-maker':
+              state.customThemeColors = {
+                bg: document.getElementById('customColorBg').value,
+                card: document.getElementById('customColorCard').value,
+                primary: document.getElementById('customColorPrimary').value,
+                accent: document.getElementById('customColorAccent').value
+              };
+              applyTheme('custom', false);
               closeModal('themeModal');
               break;
             case 'open-ai-plan-modal':
@@ -5001,10 +5711,12 @@
               showToast('🔊 5秒間プレビュー再生中...');
               break;
             case 'select-lab-topic':
+              abortQuizSilently();
               state.selectedLabTopic = actionEl.dataset.topic;
               state.currentCardId = null;
               state.isCardFlipped = false;
               state.selectedCardIdsForDelete.clear();
+              document.getElementById('quizResultView').style.display = 'none';
               renderLabView();
               break;
             case 'open-add-topic-modal':
@@ -5020,8 +5732,34 @@
               deleteCustomTopic(actionEl.dataset.topic);
               break;
             case 'set-lab-tab':
+              abortQuizSilently();
+              document.getElementById('quizResultView').style.display = 'none';
               state.labActiveTab = actionEl.dataset.tab;
               renderLabView();
+              break;
+            case 'start-quiz':
+              startMiniQuiz(actionEl.dataset.quizMode);
+              break;
+            case 'answer-quiz':
+              handleQuizAnswer(Number(actionEl.dataset.choiceIndex));
+              break;
+            case 'next-quiz-question':
+              state.quizState.currentIndex++;
+              renderCurrentQuizQuestion();
+              break;
+            case 'abort-quiz':
+              abortQuizSilently();
+              document.getElementById('quizPlayView').style.display = 'none';
+              document.getElementById('quizResultView').style.display = 'none';
+              document.getElementById('quizSetupView').style.display = 'flex';
+              break;
+            case 'reset-quiz-to-setup':
+              document.getElementById('quizResultView').style.display = 'none';
+              document.getElementById('quizSetupView').style.display = 'flex';
+              renderLabView();
+              break;
+            case 'send-wrong-quiz-to-weakness':
+              sendWrongQuizCardsToWeakness();
               break;
             case 'flip-flashcard':
               if (getFilteredFlashcards(state.currentSubject).length > 0) {
@@ -5161,6 +5899,23 @@
               break;
             default:
               break;
+          }
+        });
+
+        // オリジナル着せ替えメーカー リアルタイムプレビュー連動
+        ['customColorBg', 'customColorCard', 'customColorPrimary', 'customColorAccent'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.addEventListener('input', () => {
+              state.customThemeColors = {
+                bg: document.getElementById('customColorBg').value,
+                card: document.getElementById('customColorCard').value,
+                primary: document.getElementById('customColorPrimary').value,
+                accent: document.getElementById('customColorAccent').value
+              };
+              syncCustomMakerUI();
+              applyTheme('custom', true);
+            });
           }
         });
 
