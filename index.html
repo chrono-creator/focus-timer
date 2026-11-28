@@ -4197,12 +4197,82 @@
         const filtered = getFilteredFlashcards(subject);
         if (filtered.length < 2) return null;
 
-        const globalBacks = [];
+        // 選択肢用に（※〜）の補足メモを除去して公平化するヘルパー
+        const cleanOptionText = (str) => {
+          if (!str) return '';
+          return str.replace(/[（(][※*＊].*?[）)]/g, '').trim() || str.trim();
+        };
+
+        // 正解の文字列から方角・数字・対義語をズラした「ひっかけダミー」を自動生成
+        const generateMutatedDistractors = (cleanAns) => {
+          const variants = new Set();
+
+          // 1. 方角の反転・回転（例：南東の季節風 → 北西の季節風 / 南西の季節風 / 北東の季節風）
+          const dirPairs = [
+            ['南東', ['北西', '南西', '北東']],
+            ['北西', ['南東', '北東', '南西']],
+            ['南西', ['北東', '南東', '北西']],
+            ['北東', ['南西', '北西', '南東']],
+            ['東経', ['西経']], ['西経', ['東経']],
+            ['北緯', ['南緯']], ['南緯', ['北緯']],
+            ['東部', ['西部', '北部', '南部']],
+            ['西部', ['東部', '北部', '南部']],
+            ['北部', ['南部', '東部', '西部']],
+            ['南部', ['北部', '東部', '西部']]
+          ];
+          for (const [src, targets] of dirPairs) {
+            if (cleanAns.includes(src)) {
+              targets.forEach(t => variants.add(cleanAns.replace(src, t)));
+            }
+          }
+
+          // 2. 頻出の対義語・類似語置換
+          const antonymPairs = [
+            ['高温多湿', '低温乾燥'], ['低温乾燥', '高温多湿'],
+            ['太平洋', '日本海'], ['日本海', '太平洋'],
+            ['輸入', '輸出'], ['輸出', '輸入'],
+            ['需要', '供給'], ['供給', '需要'],
+            ['黒潮', '親潮'], ['親潮', '黒潮'],
+            ['暖流', '寒流'], ['寒流', '暖流'],
+            ['上昇', '下降'], ['下降', '上昇'],
+            ['増加', '減少'], ['減少', '増加'],
+            ['比例', '反比例'], ['反比例', '比例'],
+            ['酸性', 'アルカリ性'], ['アルカリ性', '酸性'],
+            ['酸化', '還元'], ['還元', '酸化'],
+            ['直列', '並列'], ['並列', '直列'],
+            ['動脈', '静脈'], ['静脈', '動脈']
+          ];
+          for (const [src, target] of antonymPairs) {
+            if (cleanAns.includes(src)) {
+              variants.add(cleanAns.replace(src, target));
+            }
+          }
+
+          // 3. 数字・年号のズラし（例：2007年 → 2005年 / 2010年、7割 → 5割 / 8割）
+          const numMatch = cleanAns.match(/\d+/);
+          if (numMatch) {
+            const num = parseInt(numMatch[0], 10);
+            const deltas = num >= 1000 ? [-2, 3, -5] : num >= 10 ? [-2, 2, 5] : [-1, 1, 2];
+            deltas.forEach(d => {
+              const shifted = num + d;
+              if (shifted > 0) {
+                variants.add(cleanAns.replace(numMatch[0], String(shifted)));
+              }
+            });
+          }
+
+          variants.delete(cleanAns);
+          return Array.from(variants).sort(() => Math.random() - 0.5);
+        };
+
+        // 他のカード候補プール（同じフォルダ内を最優先、次に同教科全体、最後に他教科）
+        const sameTopicCards = filtered;
+        const sameSubjectCards = state.flashcards[subject] || [];
+        const otherSubjectCards = [];
         SUBJECT_NAMES.forEach(s => {
-          (state.flashcards[s] || []).forEach(c => {
-            if (c.back && !globalBacks.includes(c.back)) globalBacks.push(c.back);
-          });
+          if (s !== subject) otherSubjectCards.push(...(state.flashcards[s] || []));
         });
+
         const fallbackDummies = ['（該当なし）', '（別の用語）', '（定義が異なる）', '（条件が不十分）'];
 
         const weightedPool = [...filtered]
@@ -4213,19 +4283,51 @@
         const targetCards = mode === 'standard' ? weightedPool.slice(0, 10) : weightedPool;
 
         return targetCards.map(card => {
+          const cleanCorrect = cleanOptionText(card.back);
           const distractors = [];
-          const candidateBacks = globalBacks.filter(b => b !== card.back).sort(() => Math.random() - 0.5);
-          for (const b of candidateBacks) {
-            if (distractors.length >= 3) break;
-            distractors.push(b);
+
+          // まず自動変異ひっかけダミーを最大2つまで混ぜる（全部変異だと逆に見破られるのを防ぐ）
+          const mutated = generateMutatedDistractors(cleanCorrect);
+          for (const m of mutated.slice(0, 2)) {
+            if (distractors.length < 3 && m !== cleanCorrect && !distractors.includes(m)) {
+              distractors.push(m);
+            }
           }
+
+          // 残り枠は同じフォルダ→同教科→他教科のカードから「文字数・末尾が似ている順」に選出
+          const scoreSimilarity = (candidateText) => {
+            let score = Math.random() * 2;
+            const lenDiff = Math.abs(candidateText.length - cleanCorrect.length);
+            score += Math.max(0, 6 - lenDiff);
+            if (candidateText.slice(-1) === cleanCorrect.slice(-1)) score += 3;
+            if (candidateText.slice(-2) === cleanCorrect.slice(-2) && cleanCorrect.length >= 2) score += 4;
+            return score;
+          };
+
+          const collectFromPool = (pool) => {
+            const scored = pool
+              .map(c => cleanOptionText(c.back))
+              .filter(txt => txt && txt !== cleanCorrect && !distractors.includes(txt))
+              .map(txt => ({ txt, score: scoreSimilarity(txt) }))
+              .sort((a, b) => b.score - a.score);
+
+            for (const item of scored) {
+              if (distractors.length >= 3) break;
+              if (!distractors.includes(item.txt)) distractors.push(item.txt);
+            }
+          };
+
+          collectFromPool(sameTopicCards);
+          if (distractors.length < 3) collectFromPool(sameSubjectCards);
+          if (distractors.length < 3) collectFromPool(otherSubjectCards);
+
           for (const fb of fallbackDummies) {
             if (distractors.length >= 3) break;
-            if (fb !== card.back && !distractors.includes(fb)) distractors.push(fb);
+            if (fb !== cleanCorrect && !distractors.includes(fb)) distractors.push(fb);
           }
 
           const options = [
-            { text: card.back, isCorrect: true },
+            { text: cleanCorrect, isCorrect: true },
             ...distractors.map(d => ({ text: d, isCorrect: false }))
           ].sort(() => Math.random() - 0.5);
 
